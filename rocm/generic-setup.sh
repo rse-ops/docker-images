@@ -12,11 +12,11 @@ echo deb-src http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu xenial main
 apt-get -qq update
 apt-get -qq install -y --no-install-recommends python-dev build-essential sudo git vim dh-autoreconf ninja-build ca-certificates
 
-wget -q --no-check-certificate https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz
-tar -xzf cmake-3.10.1-Linux-x86_64.tar.gz
-cp -fR cmake-3.10.1-Linux-x86_64/* /usr
-rm -rf cmake-3.10.1-Linux-x86_64
-rm cmake-3.10.1-Linux-x86_64.tar.gz
+wget -q --no-check-certificate https://cmake.org/files/v3.16/cmake-3.16.0-Linux-x86_64.tar.gz
+tar -xzf cmake-3.16.0-Linux-x86_64.tar.gz
+cp -fR cmake-3.16.0-Linux-x86_64/* /usr
+rm -rf cmake-3.16.0-Linux-x86_64
+rm cmake-3.16.0-Linux-x86_64.tar.gz
 
 wget -q --no-check-certificate https://bootstrap.pypa.io/get-pip.py
 python get-pip.py

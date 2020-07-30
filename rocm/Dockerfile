@@ -1,4 +1,4 @@
-FROM rocm/rocm-terminal:2.3
+FROM rocm/dev-ubuntu-16.04:3.5.1
 
 LABEL maintainer="David Beckingsale <david@llnl.gov>"
 
