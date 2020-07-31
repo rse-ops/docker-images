@@ -1,6 +1,6 @@
 FROM axom/compilers:ubuntu-18-base
 
-LABEL maintainer="David Beckingsale <david@llnl.gov>"
+LABEL maintainer="Josh Essman <essman1@llnl.gov>"
 
 ENV llvmver=10.0.0
 ENV llvmtar=clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04

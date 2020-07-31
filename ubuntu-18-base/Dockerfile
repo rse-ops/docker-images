@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-LABEL maintainer="David Beckingsale <david@llnl.gov>"
+LABEL maintainer="Josh Essman <essman1@llnl.gov>"
 
 ADD generic-setup.sh /root/generic-setup.sh
 
