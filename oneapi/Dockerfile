@@ -8,7 +8,7 @@ RUN sudo apt-get -qq update \
   && sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB \
   && echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list \
   && sudo apt-get -qqq update \
-  && sudo apt-get install -y intel-oneapi-icc intel-oneapi-ifort intel-oneapi-dpcpp-compiler
+  && sudo apt-get install -y intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
 
 RUN sudo apt-get -qq install -y lsb-release && sudo apt-get clean all
 
