@@ -1,4 +1,4 @@
-FROM axom/compilers:ubuntu-base
+FROM axom/compilers:gcc-8
 
 LABEL maintainer="David Beckingsale <david@llnl.gov>"
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-source /opt/intel/inteloneapi/setvars.sh 
+source /opt/intel/oneapi/setvars.sh
 exec "$@"
 
