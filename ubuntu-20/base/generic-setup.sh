@@ -3,6 +3,8 @@ set -e
 set -x
 
 apt-get -qq update
+# Needs to be noninteractive
+DEBIAN_FRONTEND="noninteractive" TZ="America/Los_Angeles" apt-get -qq install -fy tzdata
 apt-get -qq install -fy --no-install-recommends build-essential ca-certificates curl dh-autoreconf git lcov ninja-build pkg-config python3-dev python3-pip sudo wget xsltproc
 
 # Install Clingo for Spack
