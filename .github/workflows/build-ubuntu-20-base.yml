@@ -29,14 +29,14 @@ jobs:
       id: extract_branch
     - name: Get dockerfile name
       shell: bash
-      run: echo "##[set-output name=filename;]$(echo ${{ inputs.os-version }}/${{ inputs.image-name }}/Dockerfile)"
+      run: echo "##[set-output name=filename;]$(echo ${{ github.event.inputs.os-version }}/${{ github.event.inputs.image-name }}/Dockerfile)"
       id: dockerfile_name
     - name: Get dockerhub repo name
       shell: bash
       run: |
-        echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`
-        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`)"
-        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_latest)"
+        echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`
+        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`)"
+        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_latest)"
       id: repo_name
 
     - name: Checkout
