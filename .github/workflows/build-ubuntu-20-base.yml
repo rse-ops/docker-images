@@ -5,7 +5,15 @@ name: Build Ubuntu-20 Images
 # Manually triggered
 on:
   workflow_dispatch:
-    # No input required
+    inputs:
+      os-version:
+        description: 'OS version to build'
+        required: true
+        default: 'ubuntu-20'
+      image-name:
+        description: 'Image to build'
+        required: true
+        default: 'base'
 
 jobs:
   build_base:
@@ -21,14 +29,14 @@ jobs:
       id: extract_branch
     - name: Get dockerfile name
       shell: bash
-      run: echo "##[set-output name=filename;]$(echo ${IMAGE_OS}/base/Dockerfile)"
+      run: echo "##[set-output name=filename;]$(echo ${{ inputs.os-version }}/${{ inputs.image-name }}/Dockerfile)"
       id: dockerfile_name
     - name: Get dockerhub repo name
       shell: bash
       run: |
-        echo ${REPO}:${IMAGE_OS}_base_`date "+%m-%d-%y_%Hh-%Mm"`
-        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${IMAGE_OS}_base_`date "+%m-%d-%y_%Hh-%Mm"`)"
-        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${IMAGE_OS}_base_latest)"
+        echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`
+        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`)"
+        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${{ inputs.os-version }}_${{ inputs.image-name }}_latest)"
       id: repo_name
 
     - name: Checkout
