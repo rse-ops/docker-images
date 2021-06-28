@@ -58,6 +58,6 @@ jobs:
         push: true
         tags: ${{ steps.repo_name.outputs.repo_plus_tag }},${{ steps.repo_name.outputs.repo_plus_latest }}
         file: ${{ steps.dockerfile_name.outputs.filename }}
-        context: .
+        context: ${{ github.event.inputs.os-version }}/${{ github.event.inputs.image-name }}
         platforms: linux/amd64
         build-args: branch=${{ steps.extract_branch.outputs.branch }}
