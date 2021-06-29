@@ -2,16 +2,12 @@ FROM axom/compilers:ubuntu-20-base_latest
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>"
 
-ENV llvmver=10.0.0
-ENV llvmtar=clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-20.04
-ENV tarext=.tar.xz
-
 RUN \
-    wget -q --no-check-certificate https://github.com/llvm/llvm-project/releases/download/llvmorg-${llvmver}/${llvmtar}${tarext} \
-    && tar xf ${llvmtar}${tarext} \
-    && sudo cp -fR ${llvmtar}/* /usr \
-    && rm -rf ${llvmtar} \
-    && rm ${llvmtar}${tarext}
-
+       sudo apt-get -qq install -y --no-install-recommends \
+         clang-10 \
+    && sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-10 100 \
+    && sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100 \
+    && sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang-10 100 \
+    && sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-10 100
 USER axom
 WORKDIR /home/axom
