@@ -1,4 +1,4 @@
-FROM axom/compilers:ubuntu-20-base
+FROM axom/compilers:ubuntu-20-base_latest
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>"
 

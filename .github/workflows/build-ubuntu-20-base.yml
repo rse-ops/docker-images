@@ -16,12 +16,11 @@ on:
         default: 'base'
 
 jobs:
-  build_base:
+  build_image:
     runs-on: ubuntu-latest
-    name: Builds base docker image
+    name: Builds selected Docker image
     env:
       REPO: axom/compilers
-      IMAGE_OS: ubuntu-20
     steps:
     - name: Extract branch name
       shell: bash
@@ -34,9 +33,9 @@ jobs:
     - name: Get dockerhub repo name
       shell: bash
       run: |
-        echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`
-        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`)"
-        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${{ github.event.inputs.os-version }}_${{ github.event.inputs.image-name }}_latest)"
+        echo ${REPO}:${{ github.event.inputs.os-version }}-${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`
+        echo "##[set-output name=repo_plus_tag;]$(echo ${REPO}:${{ github.event.inputs.os-version }}-${{ github.event.inputs.image-name }}_`date "+%m-%d-%y_%Hh-%Mm"`)"
+        echo "##[set-output name=repo_plus_latest;]$(echo ${REPO}:${{ github.event.inputs.os-version }}-${{ github.event.inputs.image-name }}_latest)"
       id: repo_name
 
     - name: Checkout
