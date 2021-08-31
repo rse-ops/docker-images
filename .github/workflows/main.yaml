@@ -65,14 +65,15 @@ jobs:
         id: builder
         run: |
             basedir=$(dirname ${{ matrix.result.name }})
-            printf "Base directory is ${basedir}"
+            printf "Base directory is ${basedir}\n"
             dockerfile=$(basename ${{ matrix.result.name }})
-            printf "Dockerfile basename is ${dockerfile}"
+            printf "Dockerfile basename is ${dockerfile}\n"
             cd $basedir
             tag=$(basename ${basedir})
-            printf "Tag is ${tag}"
+            printf "Tag is ${tag}\n"
             container=$(basename $(dirname $basedir))          
-            printf "Container is ${container}"
+            printf "Container is ${container}\n"
+            cat ${{ matrix.result.name }}
             docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
             docker images
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
