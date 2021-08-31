@@ -38,6 +38,29 @@ jobs:
       with: 
         root: .
         parser: dockerfile
+
+      # This should not trigger a second time, since the token is not a PAT
+      - name: Update Recipes
+#        if: (github.event_name == 'push')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            printf "GitHub Actor: ${GITHUB_ACTOR}\n"
+            git config user.name "github-actions"
+            git config user.email "github-actions@users.noreply.github.com"
+            git add ${{ matrix.result.name }}
+            set +e
+            git status | grep modified
+            if [ $? -eq 0 ]; then
+                set -e
+                printf "Changes\n"
+                git commit -m "Automated push to update ${{ matrix.result.name }} $(date '+%Y-%m-%d')" || exit 0
+                git push origin main
+            else
+                set -e
+                printf "No changes\n"
+            fi
+
          
   build:
     needs:
@@ -87,27 +110,6 @@ jobs:
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
             # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
             
-      # This should not trigger a second time, since the token is not a PAT
-      - name: Update Recipes
-#        if: (github.event_name == 'schedule')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            printf "GitHub Actor: ${GITHUB_ACTOR}\n"
-            git config user.name "github-actions"
-            git config user.email "github-actions@users.noreply.github.com"
-            git add ${{ matrix.result.name }}
-            set +e
-            git status | grep modified
-            if [ $? -eq 0 ]; then
-                set -e
-                printf "Changes\n"
-                git commit -m "Automated push to update jobs.yml $(date '+%Y-%m-%d')" || exit 0
-                git push origin master
-            else
-                set -e
-                printf "No changes\n"
-            fi
 
       - name: Deploy Container
 #        if: (github.event_name != 'pull_request')
