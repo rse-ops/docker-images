@@ -31,14 +31,14 @@ jobs:
          
   build:
     needs:
-      - test
+      - update
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        result: ${{ fromJson(needs.test.outputs.dockerfile_matrix) }}
+        result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
 
-    name: "[build] ${{ matrix.result.name }}"
+    name: "Build ${{ matrix.result.name }}"
     steps:
       - name: Checkout Actions Repository
         uses: actions/checkout@v2
