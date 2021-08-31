@@ -42,7 +42,7 @@ jobs:
 
     name: "Build ${{ matrix.result.name }}"
     steps:
-      - name: Checkout Actions Repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: GHCR Login
@@ -64,6 +64,9 @@ jobs:
       - name: Build ${{ matrix.result.name }}
         id: builder
         run: |
+            sudo apt-get install -y tree
+            echo $PWD
+            ls .
             basedir=$(dirname ${{ matrix.result.name }})
             printf "Base directory is ${basedir}\n"
             dockerfile=$(basename ${{ matrix.result.name }})
