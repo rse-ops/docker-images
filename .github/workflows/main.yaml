@@ -4,7 +4,15 @@ name: Docker Updates
 # TODO we need an easy way to detect new and changes files in the PR and then
 # put them into a build matrix
 on: 
+
+  # On a schedule we push updated recipes
+  schedule:
+    - cron: 0 1 * * *
+
+  # On pull request we test updates to images
   pull_request: []
+ 
+  # On push to main we build and deploy images
   push: 
     branches:
       - main
@@ -79,40 +87,25 @@ jobs:
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
             # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
             
-      # We will test out, if it's a push to main, pushing updated recipes
       # This should not trigger a second time, since the token is not a PAT
       - name: Update Recipes
-#        if: (github.event_name != 'pull_request')
+#        if: (github.event_name == 'schedule')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             printf "GitHub Actor: ${GITHUB_ACTOR}\n"
             git config user.name "github-actions"
             git config user.email "github-actions@users.noreply.github.com"
-
-            # Since this is on merge to main, we need to pull separately
-            here=$(pwd)
-            cd /tmp
-            git clone https://github.com/radiuss/docker-images
-            cd docker-images
-            basedir=$(dirname ${{ matrix.result.name }})
-            mkdir -p $basedir
-            cp ${{ matrix.result.name }} $basedir/
-            printf "git status\n"
-            git status
-            printf "git add ${{ matrix.result.name }}\n"
-            git add "${{ matrix.result.name }}"
-
-            # There is very likely a better way to check for new/modified files!
-            git status | grep "modified"
-            modified=$(echo $?)
-            git status | grep "new file"
-            new_file=$(echo $?)
-            if [ "${modified}" -eq 0 ] || [ "${new_file}" -eq 0 ]; then
+            git add ${{ matrix.result.name }}
+            set +e
+            git status | grep modified
+            if [ $? -eq 0 ]; then
+                set -e
                 printf "Changes\n"
-                git commit -m "Automated push to update containers $(date '+%Y-%m-%d')" || exit 0
-                git push origin main
+                git commit -m "Automated push to update jobs.yml $(date '+%Y-%m-%d')" || exit 0
+                git push origin master
             else
+                set -e
                 printf "No changes\n"
             fi
 
