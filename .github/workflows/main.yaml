@@ -89,6 +89,15 @@ jobs:
             printf "GitHub Actor: ${GITHUB_ACTOR}\n"
             git config user.name "github-actions"
             git config user.email "github-actions@users.noreply.github.com"
+
+            # Since this is on merge to main, we need to pull separately
+            here=$(pwd)
+            cd /tmp
+            git clone git@github.com:radiuss/docker-images
+            cd docker-images
+            basedir=$(dirname ${{ matrix.result.name }})
+            mkdir -p $basedir
+            cp ${{ matrix.result.name }} $basedir/
             printf "git status\n"
             git status
             printf "git add ${{ matrix.result.name }}\n"
