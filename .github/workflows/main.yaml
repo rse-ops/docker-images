@@ -19,14 +19,16 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Add new Dockerfiles for build
-      uses: vsoch/uptodate@main
+      uses: vsoch/uptodate@add/relativepath-outputs
       with: 
+        root: .
         parser: dockerhierarchy
 
     - name: Update existing Dockerfile hashes
-      uses: vsoch/uptodate@main
+      uses: vsoch/uptodate@add/relativepath-outputs
       id: dockerfile_check
       with: 
+        root: .
         parser: dockerfile
          
   build:
