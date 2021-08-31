@@ -52,7 +52,8 @@ jobs:
 
           # Add all results!
           for row in $(echo "${result}" | jq -r '.[] | @base64'); do
-            _jq() {echo ${row} | base64 --decode | jq -r ${1} }
+            _jq() {
+              echo ${row} | base64 --decode | jq -r ${1};}
             git add $(_jq '.name')
           done
           set +e
