@@ -29,8 +29,8 @@ RUN python3 -m pip install --upgrade pip && \
 
 # Install cmake
 RUN wget -q --no-check-certificate https://cmake.org/files/v3.18/cmake-3.18.6-Linux-x86_64.tar.gz && \
-    tar -xzf cmake-3.18.6-Linux-x86_64.tar.gz
-    rm -r cmake-3.18.6-Linux-x86_64/share/vim/vimfiles
-    cp -fR cmake-3.18.6-Linux-x86_64/* /usr
-    rm -rf cmake-3.18.6-Linux-x86_64
+    tar -xzf cmake-3.18.6-Linux-x86_64.tar.gz \
+    rm -r cmake-3.18.6-Linux-x86_64/share/vim/vimfiles \
+    cp -fR cmake-3.18.6-Linux-x86_64/* /usr \
+    rm -rf cmake-3.18.6-Linux-x86_64 \
     rm cmake-3.18.6-Linux-x86_64.tar.gz
