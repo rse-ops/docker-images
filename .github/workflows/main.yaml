@@ -59,14 +59,18 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
-      - name: Build Docker Images
+      - name: Build ${{ matrix.result.name }}
         id: builder
-        run:
+        run: |
             basedir=$(dirname ${{ matrix.result.name }})
+            printf "Base directory is ${basedir}"
             dockerfile=$(basename ${{ matrix.result.name }})
+            printf "Dockerfile basename is ${dockerfile}"
             cd $basedir
-            tag=$(basename $basedir)
+            tag=$(basename ${basedir})
+            printf "Tag is ${tag}"
             container=$(basename $(dirname $basedir))          
+            printf "Container is ${container}"
             docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
             docker images
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
