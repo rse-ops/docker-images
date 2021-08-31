@@ -65,7 +65,6 @@ jobs:
         id: builder
         run: |
             sudo apt-get install -y tree
-            echo $PWD
             tree .
             basedir=$(dirname ${{ matrix.result.name }})
             printf "Base directory is ${basedir}\n"
@@ -80,21 +79,4 @@ jobs:
             docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
             docker images
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
-
-      - name: Build Summary
-        id: summary
-        run: |
-          container=${{ steps.builder.outputs.container }}
-          docker system prune -f
-          docker image save "$container" > container
-          tar -czvf container.tar.gz container > /dev/null
-          docker=$(docker system df -v | grep "$container")
-          docker_data=($docker)
-          raw=$(ls -lh --block-size=MB | grep "container.tar.gz")
-          raw_data=($raw)
-          echo "[[ Build Summary: $container ]]"
-          echo "URL              :  ${docker_data[0]}"
-          echo "Version          :  ${docker_data[1]}"
-          echo "Raw Size         :  ${docker_data[6]}"
-          echo "Compressed Size  :  ${raw_data[4]}"
-          # TODO this should be saved to site / gh-pages, for something like autamus librarian!
+            # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
