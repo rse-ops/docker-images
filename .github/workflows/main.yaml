@@ -61,6 +61,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
+      # This currently has a lot of extra prints for debugging
       - name: Build ${{ matrix.result.name }}
         id: builder
         run: |
@@ -78,6 +79,25 @@ jobs:
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
             # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
             
+      # We will test out, if it's a push to main, pushing updated recipes
+      # This should not trigger a second time, since the token is not a PAT
+      - name: Update Recipes
+        if: (github.event_name != 'pull_request')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            printf "GitHub Actor: ${GITHUB_ACTOR}\n"
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@users.noreply.github.com"
+            git add .
+            git status | grep "modified\|new file"
+            if [ $? -eq 0 ]; then
+                printf "Changes\n"
+                git commit -m "Automated push to update containers $(date '+%Y-%m-%d')" || exit 0
+                git push origin main
+            else
+                printf "No changes\n"
+            fi
 
       - name: Deploy Container
         if: (github.event_name != 'pull_request')
