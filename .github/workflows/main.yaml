@@ -41,7 +41,7 @@ jobs:
 
     # This should not trigger a second time, since the token is not a PAT
     - name: Update Recipes
-#     if: (github.event_name == 'push')
+#      if: (github.event_name == 'push')
       env:
         result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,14 +61,13 @@ jobs:
           if [ $? -eq 0 ]; then
               set -e
               printf "Changes\n"
-              git commit -m "Automated push to update ${{ matrix.result.name }} $(date '+%Y-%m-%d')" || exit 0
+              git commit -a -m "Automated push to update ${{ matrix.result.name }} $(date '+%Y-%m-%d')" || exit 0
               git push origin main
           else
               set -e
               printf "No changes\n"
           fi
-
-         
+        
   build:
     needs:
       - update
@@ -116,7 +115,6 @@ jobs:
         docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
         echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
         # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
-            
 
     - name: Deploy Container
 #     if: (github.event_name != 'pull_request')
