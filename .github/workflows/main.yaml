@@ -87,10 +87,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             printf "GitHub Actor: ${GITHUB_ACTOR}\n"
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@users.noreply.github.com"
-            basedir=$(dirname ${{ matrix.result.name }})
-            git add $basedir/*
+            git config user.name "github-actions"
+            git config user.email "github-actions@users.noreply.github.com"
+            printf "git add ${{ matrix.result.name }}\n"
+            git add "${{ matrix.result.name }}"
+            printf "git status | grep modified\|new file\n"
             git status | grep "modified\|new file"
             if [ $? -eq 0 ]; then
                 printf "Changes\n"
