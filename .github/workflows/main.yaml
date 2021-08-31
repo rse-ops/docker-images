@@ -92,8 +92,13 @@ jobs:
             printf "git add ${{ matrix.result.name }}\n"
             git add "${{ matrix.result.name }}"
             printf "git status | grep modified\|new file\n"
-            git status | grep "modified\|new file"
-            if [ $? -eq 0 ]; then
+
+            # There is very likely a better way to check for new/modified files!
+            git status | grep "modified"
+            modified=$(echo $?)
+            git status | grep "new file"
+            new_file=$(echo $?)
+            if [ "${modified}" -eq 0 ] || [ "${new_file}" -eq 0 ]; then
                 printf "Changes\n"
                 git commit -m "Automated push to update containers $(date '+%Y-%m-%d')" || exit 0
                 git push origin main
