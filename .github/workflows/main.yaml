@@ -89,6 +89,8 @@ jobs:
             printf "GitHub Actor: ${GITHUB_ACTOR}\n"
             git config user.name "github-actions"
             git config user.email "github-actions@users.noreply.github.com"
+            printf "git status\n"
+            git status
             printf "git add ${{ matrix.result.name }}\n"
             git add "${{ matrix.result.name }}"
 
