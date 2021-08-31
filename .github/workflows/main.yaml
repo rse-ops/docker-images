@@ -4,7 +4,15 @@ name: Docker Updates
 # TODO we need an easy way to detect new and changes files in the PR and then
 # put them into a build matrix
 on: 
+
+  # On a schedule we push updated recipes
+  schedule:
+    - cron: 0 1 * * *
+
+  # On pull request we test updates to images
   pull_request: []
+ 
+  # On push to main we build and deploy images
   push: 
     branches:
       - main
@@ -30,7 +38,38 @@ jobs:
       with: 
         root: .
         parser: dockerfile
-         
+
+    # This should not trigger a second time, since the token is not a PAT
+    - name: Update Recipes
+      if: (github.event_name == 'push')
+      env:
+        result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          printf "GitHub Actor: ${GITHUB_ACTOR}\n"
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git fetch || printf "fetch did not work\n"
+          git checkout main || printf "Already on main!\n"
+
+          # Add all results!
+          for row in $(echo "${result}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${row} | base64 --decode | jq -r ${1};}
+            git add $(_jq '.name')
+          done
+          set +e
+          git status | grep modified
+          if [ $? -eq 0 ]; then
+              set -e
+              printf "Changes\n"
+              git commit -a -m "Automated push to update ${{ matrix.result.name }} $(date '+%Y-%m-%d')" || exit 0
+              git push origin main
+          else
+              set -e
+              printf "No changes\n"
+          fi
+
   build:
     needs:
       - update
@@ -42,68 +81,48 @@ jobs:
 
     name: "Build ${{ matrix.result.name }}"
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: GHCR Login
-        if: (github.event_name != 'pull_request')
-        uses: docker/login-action@v1 
-        with:
-          registry: ghcr.io
-          username: ${{ secrets.GHCR_USERNAME }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    - name: GHCR Login
+      if: (github.event_name != 'pull_request')
+      uses: docker/login-action@v1 
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
-      - name: Make Space For Build
-        run: |
+    - name: Make Space For Build
+      run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
-      # This currently has a lot of extra prints for debugging
-      - name: Build ${{ matrix.result.name }}
-        id: builder
-        run: |
-            basedir=$(dirname ${{ matrix.result.name }})
-            printf "Base directory is ${basedir}\n"
-            dockerfile=$(basename ${{ matrix.result.name }})
-            printf "Dockerfile basename is ${dockerfile}\n"
-            tag=$(basename ${basedir})
-            printf "Tag is ${tag}\n"
-            container=$(basename $(dirname $basedir))          
-            printf "Container is ${container}\n"
-            cat ${{ matrix.result.name }}
-            cd $basedir
-            docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
-            echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
-            # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
-            
-      # We will test out, if it's a push to main, pushing updated recipes
-      # This should not trigger a second time, since the token is not a PAT
-      - name: Update Recipes
-        if: (github.event_name != 'pull_request')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            printf "GitHub Actor: ${GITHUB_ACTOR}\n"
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@users.noreply.github.com"
-            git add .
-            git status | grep "modified\|new file"
-            if [ $? -eq 0 ]; then
-                printf "Changes\n"
-                git commit -m "Automated push to update containers $(date '+%Y-%m-%d')" || exit 0
-                git push origin main
-            else
-                printf "No changes\n"
-            fi
+    # This currently has a lot of extra prints for debugging
+    - name: Build ${{ matrix.result.name }}
+      id: builder
+      run: |
+        basedir=$(dirname ${{ matrix.result.name }})
+        printf "Base directory is ${basedir}\n"
+        dockerfile=$(basename ${{ matrix.result.name }})
+        printf "Dockerfile basename is ${dockerfile}\n"
+        tag=$(basename ${basedir})
+        printf "Tag is ${tag}\n"
+        container=$(basename $(dirname $basedir))          
+        printf "Container is ${container}\n"
+        cat ${{ matrix.result.name }}
+        cd $basedir
+        docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
+        echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
+        # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
 
-      - name: Deploy Container
-        if: (github.event_name != 'pull_request')
-        env:
-          container: ${{ steps.builder.outputs.container }}
-        run: |
-            docker images
-            printf "docker push ${{ env.container }} --all-tags\n"
-            docker push ${{ env.container }} --all-tags
+    - name: Deploy Container
+#     if: (github.event_name != 'pull_request')
+      env:
+        container: ${{ steps.builder.outputs.container }}
+      run: |
+        docker images
+        printf "docker push ${{ env.container }}\n"
+        docker push ${{ env.container }}
