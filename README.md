@@ -1,6 +1,6 @@
 # Radiuss Docker
 
-![img/rse-radiuss.png](img/rse-radiuss.png)
+![img/rse-radiuss-docker.png](img/rse-radiuss-docker.png)
 
 [![License](https://img.shields.io/badge/License-MIT%203--Clause-blue.svg)](https://github.com/rse-radiuss/radius-docker/blob/main/LICENSE)
 
