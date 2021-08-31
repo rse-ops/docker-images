@@ -65,8 +65,8 @@ jobs:
             basedir=$(dirname ${{ matrix.result.name }})
             dockerfile=$(basename ${{ matrix.result.name }})
             cd $basedir
-            tag=$(basename $dirname) 
-            container=$(basename $(dirname basedir))          
+            tag=$(basename $basedir)
+            container=$(basename $(dirname $basedir))          
             docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
             docker images
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
