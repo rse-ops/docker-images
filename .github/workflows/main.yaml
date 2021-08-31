@@ -66,7 +66,7 @@ jobs:
         run: |
             sudo apt-get install -y tree
             echo $PWD
-            ls .
+            tree .
             basedir=$(dirname ${{ matrix.result.name }})
             printf "Base directory is ${basedir}\n"
             dockerfile=$(basename ${{ matrix.result.name }})
