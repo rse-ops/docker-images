@@ -1,0 +1,30 @@
+name: Update Docker Images
+
+# TODO this will be a regularly run job to update images
+on: [pull_request]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Actions Repository
+      uses: actions/checkout@v2
+
+    - name: Add new Dockerfiles for build
+      uses: vsoch/uptodate@main
+      with: 
+        parser: dockerhierarchy
+
+    - name: View newly created files
+      run: |
+         sudo apt-get install -y tree
+         tree .
+
+    - name: Update existing Dockerfile hashes
+      uses: vsoch/uptodate@main
+      with: 
+        parser: dockerfile
+
+    - name: Check output files again
+      run: |
+         tree ./
