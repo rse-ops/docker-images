@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a4bbb8cd79
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
