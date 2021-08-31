@@ -19,13 +19,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Add new Dockerfiles for build
-      uses: vsoch/uptodate@add/relativepath-outputs
+      uses: vsoch/uptodate@main
       with: 
         root: .
         parser: dockerhierarchy
 
     - name: Update existing Dockerfile hashes
-      uses: vsoch/uptodate@add/relativepath-outputs
+      uses: vsoch/uptodate@main
       id: dockerfile_check
       with: 
         root: .
@@ -64,8 +64,6 @@ jobs:
       - name: Build ${{ matrix.result.name }}
         id: builder
         run: |
-            sudo apt-get install -y tree
-            tree .
             basedir=$(dirname ${{ matrix.result.name }})
             printf "Base directory is ${basedir}\n"
             dockerfile=$(basename ${{ matrix.result.name }})
@@ -77,6 +75,15 @@ jobs:
             cat ${{ matrix.result.name }}
             cd $basedir
             docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
-            docker images
             echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
             # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
+            
+
+      - name: Deploy Container
+        if: (github.event_name != 'pull_request')
+        env:
+          container: ${{ steps.builder.outputs.container }}
+        run: |
+            docker images
+            printf "docker push ${{ env.container }} --all-tags\n"
+            docker push ${{ env.container }} --all-tags
