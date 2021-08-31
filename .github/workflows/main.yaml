@@ -1,11 +1,19 @@
-name: Update Docker Images
+name: Docker Updates
 
 # TODO this will be a regularly run job to update images
-on: [pull_request]
+# TODO we need an easy way to detect new and changes files in the PR and then
+# put them into a build matrix
+on: 
+  pull_request: []
+  push: 
+    branches:
+      - main
 
 jobs:
-  run:
+  update:
     runs-on: ubuntu-latest
+    outputs:
+      dockerfile_matrix: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
     steps:
     - name: Checkout Actions Repository
       uses: actions/checkout@v2
@@ -15,16 +23,68 @@ jobs:
       with: 
         parser: dockerhierarchy
 
-    - name: View newly created files
-      run: |
-         sudo apt-get install -y tree
-         tree .
-
     - name: Update existing Dockerfile hashes
       uses: vsoch/uptodate@main
+      id: dockerfile_check
       with: 
         parser: dockerfile
+         
+  build:
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        result: ${{ fromJson(needs.test.outputs.dockerfile_matrix) }}
 
-    - name: Check output files again
-      run: |
-         tree ./
+    name: "[build] ${{ matrix.result.name }}"
+    steps:
+      - name: Checkout Actions Repository
+        uses: actions/checkout@v2
+
+      - name: GHCR Login
+        if: (github.event_name != 'pull_request')
+        uses: docker/login-action@v1 
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Make Space For Build
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+
+      - name: Build Docker Images
+        id: builder
+        run:
+            basedir=$(dirname ${{ matrix.result.name }})
+            dockerfile=$(basename ${{ matrix.result.name }})
+            cd $basedir
+            tag=$(basename $dirname) 
+            container=$(basename $(dirname basedir))          
+            docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
+            docker images
+            echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
+
+      - name: Build Summary
+        id: summary
+        run: |
+          container=${{ steps.builder.outputs.container }}
+          docker system prune -f
+          docker image save "$container" > container
+          tar -czvf container.tar.gz container > /dev/null
+          docker=$(docker system df -v | grep "$container")
+          docker_data=($docker)
+          raw=$(ls -lh --block-size=MB | grep "container.tar.gz")
+          raw_data=($raw)
+          echo "[[ Build Summary: $container ]]"
+          echo "URL              :  ${docker_data[0]}"
+          echo "Version          :  ${docker_data[1]}"
+          echo "Raw Size         :  ${docker_data[6]}"
+          echo "Compressed Size  :  ${raw_data[4]}"
+          # TODO this should be saved to site / gh-pages, for something like autamus librarian!
