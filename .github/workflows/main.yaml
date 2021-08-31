@@ -49,6 +49,8 @@ jobs:
           printf "GitHub Actor: ${GITHUB_ACTOR}\n"
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
+          git fetch || printf "fetch did not work\n"
+          git checkout main || printf "Already on main!\n"
 
           # Add all results!
           for row in $(echo "${result}" | jq -r '.[] | @base64'); do
@@ -67,7 +69,7 @@ jobs:
               set -e
               printf "No changes\n"
           fi
-        
+
   build:
     needs:
       - update
