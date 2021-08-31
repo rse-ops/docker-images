@@ -93,7 +93,7 @@ jobs:
             # Since this is on merge to main, we need to pull separately
             here=$(pwd)
             cd /tmp
-            git clone git@github.com:radiuss/docker-images
+            git clone https://github.com/radiuss/docker-images
             cd docker-images
             basedir=$(dirname ${{ matrix.result.name }})
             mkdir -p $basedir
