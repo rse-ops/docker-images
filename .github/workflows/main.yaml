@@ -21,7 +21,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     outputs:
-      dockerfile_matrix: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
+      dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfile_matrix }}
     steps:
     - name: Checkout Actions Repository
       uses: actions/checkout@v2
@@ -69,6 +69,13 @@ jobs:
               set -e
               printf "No changes\n"
           fi
+
+    - name: List all Dockerfile and save to matrix
+      uses: vsoch/uptodate@main
+      id: dockerfile_list
+      with: 
+        root: .
+        parser: dockerfilelist
 
   build:
     needs:
@@ -119,7 +126,7 @@ jobs:
         # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
 
     - name: Deploy Container
-#     if: (github.event_name != 'pull_request')
+      if: (github.event_name != 'pull_request')
       env:
         container: ${{ steps.builder.outputs.container }}
       run: |
