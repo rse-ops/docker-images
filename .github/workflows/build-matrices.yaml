@@ -74,12 +74,20 @@ jobs:
     # This currently has a lot of extra prints for debugging
     - name: Build ${{ matrix.result.dockerfile }}
       id: builder
+      env:
+        buildargs: ${{ matrix.result.buildargs }}
       run: |
         basedir=$(dirname ${{ matrix.result.filename }})
         printf "Base directory is ${basedir}\n"
         dockerfile=$(basename ${{ matrix.result.filename }})
         printf "Dockerfile basename is ${dockerfile}\n"
-        # TODO we need to get the path relative to the root and replace with -
+        # Generate command for build args, removing outer quotes
+        keys=$(jq '.|keys[]' <<< "$buildargs")
+        for key in $keys; do
+            key=$(echo "$key" | tr -d '"')
+            value=$(jq ".$key" <<< "$buildargs" | tr -d '"')
+            echo "--build-arg ${key}=${value}"
+        done
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
