@@ -72,7 +72,7 @@ jobs:
           fi
 
     - name: List all Dockerfile and save to matrix
-      uses: vsoch/uptodate@main
+      uses: vsoch/uptodate@skip-nested-uptodate
       id: dockerfile_list
       with: 
         root: .
