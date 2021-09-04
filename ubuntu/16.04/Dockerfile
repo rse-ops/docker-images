@@ -20,6 +20,10 @@ RUN apt-get -qq update && \
       ca-certificates \
       valgrind
 
+# Install spack
+RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
+ENV PATH=/opt/spack/bin:$PATH
+
 # install updated Cmake for this platform
 RUN wget -q --no-check-certificate https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz && \
     tar -xzf cmake-3.10.1-Linux-x86_64.tar.gz && \
