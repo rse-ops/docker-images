@@ -19,7 +19,7 @@ dockerbuild:
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
-      name: ghcr.io/radiuss/ubuntu
+      name: ghcr.io/rse-radiuss/ubuntu
       type: container
       startat: "16.04"
       filter: 
