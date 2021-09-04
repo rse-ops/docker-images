@@ -27,6 +27,10 @@ RUN apt-get -qq update && \
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install clingo
 
+# Install spack
+RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
+ENV PATH=/opt/spack/bin:$PATH
+
 # Install cmake
 RUN wget -q --no-check-certificate https://cmake.org/files/v3.18/cmake-3.18.6-Linux-x86_64.tar.gz && \
     tar -xzf cmake-3.18.6-Linux-x86_64.tar.gz && \
