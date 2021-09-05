@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate Build Matrix
-      uses: vsoch/uptodate@add/docker-build-command
+      uses: vsoch/uptodate@main
       id: dockerbuild
       with: 
         root: .
@@ -77,8 +77,12 @@ jobs:
       run: |
         basedir=$(dirname ${{ matrix.result.filename }})
         printf "Base directory is ${basedir}\n"
+        # Get relative path to PWD and generate dashed name from it
+        containername=$(realpath --relative-to=. $basedir)
+        containername=$(echo "${containername/\//-}")
         cd $basedir
-        echo "${{ matrix.result.command_prefix }} -t ghcr.io/TODOPATHANDTAG"
+        echo "${{ matrix.result.command_prefix }} -t ghcr.io/$containername"
+        # TODO need to derive tag here...
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
