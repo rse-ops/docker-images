@@ -50,7 +50,7 @@ jobs:
       matrix:
         result: ${{ fromJson(needs.generate.outputs.dockerbuild_matrix) }}
 
-    name: "Build ${{ matrix.result.name }}"
+    name: "Build ${{ matrix.result.description }}"
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -71,8 +71,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
-    # This currently has a lot of extra prints for debugging
-    - name: Build ${{ matrix.result.dockerfile }}
+    - name: Build ${{ matrix.result.name }}
       id: builder
       run: |
         basedir=$(dirname ${{ matrix.result.filename }})
