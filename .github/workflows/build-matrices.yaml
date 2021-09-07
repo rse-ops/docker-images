@@ -73,19 +73,22 @@ jobs:
 
     - name: Build ${{ matrix.result.container_name }}
       id: builder
+      env:
+        container: ${{ matrix.result.container_name }}
+        prefix: ${{ matrix.result.command_prefix }}
       run: |
         basedir=$(dirname ${{ matrix.result.filename }})
         printf "Base directory is ${basedir}\n"
         # Get relative path to PWD and generate dashed name from it
         cd $basedir
-        echo "${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}"
+        echo "${prefix} -t ghcr.io/${container}"
         ${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
       env:
-        container: ${{ steps.builder.outputs.container }}
+        prefix: ${{ matrix.result.command_prefix }}
       run: |
         docker images
-        printf "docker push ghcr.io/{{ matrix.result.container_name }}\n"
-        docker push ghcr.io/{{ matrix.result.container_name }}
+        printf "docker push ghcr.io/${container}\n"
+        docker push ghcr.io/${container}
