@@ -50,7 +50,7 @@ jobs:
       matrix:
         result: ${{ fromJson(needs.generate.outputs.dockerbuild_matrix) }}
 
-    name: "Build ${{ matrix.result.description }}"
+    name: "Build ${{ matrix.result.container_name }}"
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -71,17 +71,14 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
-    - name: Build ${{ matrix.result.name }}
+    - name: Build ${{ matrix.result.container_name }}
       id: builder
       run: |
         basedir=$(dirname ${{ matrix.result.filename }})
         printf "Base directory is ${basedir}\n"
         # Get relative path to PWD and generate dashed name from it
-        containername=$(realpath --relative-to=. $basedir)
-        containername=$(echo "${containername/\//-}")
         cd $basedir
-        echo "${{ matrix.result.command_prefix }} -t ghcr.io/$containername"
-        # TODO need to derive tag here...
+        echo "${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
@@ -89,5 +86,5 @@ jobs:
         container: ${{ steps.builder.outputs.container }}
       run: |
         docker images
-        printf "docker push ${{ env.container }}\n"
-        docker push ${{ env.container }}
+        printf "docker push ghcr.io/{{ matrix.result.container_name }}\n"
+        docker push ghcr.io/{{ matrix.result.container_name }}
