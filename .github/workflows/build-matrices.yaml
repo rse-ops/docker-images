@@ -78,7 +78,8 @@ jobs:
         printf "Base directory is ${basedir}\n"
         # Get relative path to PWD and generate dashed name from it
         cd $basedir
-        echo "${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}
+        echo "${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}"
+        ${{ matrix.result.command_prefix }} -t ghcr.io/{{ matrix.result.container_name }}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
