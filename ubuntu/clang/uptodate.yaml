@@ -1,4 +1,10 @@
 dockerbuild:
+
+  # This says "only build these combinations of build args"
+  matrix:
+    llvm_version: [4.0.0, 5.0.1, "6.0.0"]
+    ubuntu_version: ["16.04", "18.04", "20.04"]
+   
   build_args:
     llvm_version:
       key: llvm
