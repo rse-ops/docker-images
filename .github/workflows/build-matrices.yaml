@@ -88,7 +88,7 @@ jobs:
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
       env:
-        prefix: ${{ matrix.result.command_prefix }}
+        container: ${{ matrix.result.container_name }}
       run: |
         docker images
         printf "docker push ghcr.io/${container}\n"
