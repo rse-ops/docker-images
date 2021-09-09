@@ -1,0 +1,16 @@
+dockerbuild:
+  build_args:
+    cuda_version:
+      key: cuda
+      name: cuda
+      versions:
+        - "9.1"
+        - "10.1"
+        - "11.1"
+
+    # Look for ubuntu versions for our base builds
+    ubuntu_version:
+      key: ubuntu
+      versions:
+        - "18.04"
+        - "20.04"

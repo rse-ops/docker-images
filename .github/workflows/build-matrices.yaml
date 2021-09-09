@@ -20,8 +20,19 @@ jobs:
     outputs:
       dockerbuild_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
     steps:
-    - name: Checkout Actions Repository
-      uses: actions/checkout@v2
+
+    # Using git in the container to diff means we explicitly need to checkout a branch
+    # if we use the default of this action we get a detached HEAD state.
+    - uses: actions/checkout@v2
+      if: github.event_name == 'pull_request'
+      with:
+         fetch-depth: 0
+         ref: ${{ github.event.pull_request.head.ref }}
+
+    - uses: actions/checkout@v2
+      if: github.event_name == 'push'
+      with:
+         fetch-depth: 0
 
     - name: Generate Build Matrix
       uses: vsoch/uptodate@main
@@ -29,6 +40,7 @@ jobs:
       with: 
         root: .
         parser: dockerbuild
+        changes: false # only include changed uptodate.yaml
 
   # Allows us to preview/see the matrix
   view:
