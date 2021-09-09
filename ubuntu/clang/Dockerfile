@@ -6,7 +6,7 @@ ARG llvm_version
 ENV llvm_version=$llvm_version
 
 # Use the autamus build cache for maybe faster install?
-RUN apt-get update && apt-get install -y gnupg2 python3-dev python3-pip && \
+RUN apt-get update && apt-get install -y curl gnupg2 python3-dev python3-pip && \
     ln /usr/bin/pip3 /usr/bin/pip && \
     pip install botocore boto3 && \
     spack mirror add autamus s3://autamus-cache && \
