@@ -1,8 +1,9 @@
 name: Docker Updates
 
-# TODO this will be a regularly run job to update images
-# TODO we need an easy way to detect new and changes files in the PR and then
-# put them into a build matrix
+# This job updates base images (e.g., ubuntu)
+# Two hours later, the jobs that update matrix builds (that use these base images)
+# are run.
+
 on: 
 
   # On a schedule we push updated recipes
@@ -76,6 +77,7 @@ jobs:
       with: 
         root: .
         parser: dockerfilelist
+        flags: "--no-build-args"
 
   build:
     needs:
