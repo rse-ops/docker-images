@@ -1,4 +1,4 @@
-name: Docker Updates
+name: Dockerfile Updates
 
 # This job updates base images (e.g., ubuntu)
 # Two hours later, the jobs that update matrix builds (that use these base images)
@@ -20,9 +20,12 @@ on:
 
 jobs:
   update:
+    name: Update Dockerfiles
     runs-on: ubuntu-latest
     outputs:
       dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
+      empty_matrix: ${{ steps.check_matrix.outputs.empty_matrix }}
+
     steps:
 
     # Using git in the container to diff means we explicitly need to checkout a branch
@@ -92,7 +95,7 @@ jobs:
         changes: true # only include changed files
 
     - name: View and Check Build Matrix Result
-      id: empty-matrix
+      id: empty_matrix
       env:
         result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
       run: |
@@ -107,12 +110,12 @@ jobs:
   build:
     needs:
       - update
-    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
+    if: ${{ needs.update.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.name }}"
     steps:

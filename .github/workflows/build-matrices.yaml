@@ -16,12 +16,13 @@ on:
 
 jobs:
   generate:
+    name: Generate Build Matrix
     runs-on: ubuntu-latest
     outputs:
       dockerbuild_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
-      empty_matrix: ${{ steps.check-matrix.outputs.empty_matrix }}
-    steps:
+      empty_matrix: ${{ steps.check_matrix.outputs.empty_matrix }}
 
+    steps:
     # Using git in the container to diff means we explicitly need to checkout a branch
     # if we use the default of this action we get a detached HEAD state.
     - uses: actions/checkout@v2
@@ -44,7 +45,7 @@ jobs:
         changes: true # only include changed uptodate.yaml
 
     - name: View and Check Build Matrix Result
-      id: empty-matrix
+      id: empty_matrix
       env:
         result: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
       run: |
@@ -53,18 +54,19 @@ jobs:
           printf "The matrix is empty, will not trigger next workflow.\n"
           echo "::set-output name=empty_matrix::true"       
         else
+          printf "The matrix is not empty, and we should continue on to the next workflow.\n"
           echo "::set-output name=empty_matrix::false"          
         fi
 
   build:
     needs:
       - generate
-    if: ${{ needs.generate.outputs.empty_matrix == 'false' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.generate.outputs.dockerbuild_matrix) }}
+    if: ${{ needs.generate.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.container_name }}"
     steps:
