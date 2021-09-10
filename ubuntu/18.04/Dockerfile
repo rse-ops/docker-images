@@ -16,6 +16,7 @@ RUN apt-get -qq update && \
       vim \
       dh-autoreconf \
       ninja-build \
+      libssl-dev \
       ca-certificates \
       valgrind
 
@@ -27,4 +28,4 @@ ENV PATH=/opt/spack/bin:$PATH
 RUN spack external find && \
 
     # Install a new CMake (used to be 3.18.0)
-    spack install openssl cmake@3.20.4
+    spack install cmake@3.20.4

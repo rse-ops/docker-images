@@ -18,6 +18,7 @@ RUN apt-get -qq update && \
       pkg-config \
       python3-dev \
       python3-pip \
+      libssl-dev \
       sudo \
       wget \
       xsltproc
@@ -34,4 +35,4 @@ ENV PATH=/opt/spack/bin:$PATH
 RUN spack external find && \
 
     # Install a new CMake
-    spack install openssl cmake@3.20.4
+    spack install cmake@3.20.4
