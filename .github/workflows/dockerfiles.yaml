@@ -28,39 +28,39 @@ jobs:
 
     steps:
 
-    # Using git in the container to diff means we explicitly need to checkout a branch
-    # if we use the default of this action we get a detached HEAD state.
-    - uses: actions/checkout@v2
-      if: github.event_name == 'pull_request'
-      with:
-         fetch-depth: 0
-         ref: ${{ github.event.pull_request.head.ref }}
+      # Using git in the container to diff means we explicitly need to checkout a branch
+      # if we use the default of this action we get a detached HEAD state.
+      - uses: actions/checkout@v2
+        if: github.event_name == 'pull_request'
+        with:
+           fetch-depth: 0
+           ref: ${{ github.event.pull_request.head.ref }}
 
-    - uses: actions/checkout@v2
-      if: github.event_name == 'push'
-      with:
-         fetch-depth: 0
+      - uses: actions/checkout@v2
+        if: github.event_name == 'push'
+        with:
+           fetch-depth: 0
 
-    - name: Add new Dockerfiles for build
-      uses: vsoch/uptodate@main
-      with: 
-        root: .
-        parser: dockerhierarchy
+      - name: Add new Dockerfiles for build
+        uses: vsoch/uptodate@main
+        with: 
+          root: .
+          parser: dockerhierarchy
 
-    - name: Update existing Dockerfile hashes
-      uses: vsoch/uptodate@main
-      id: dockerfile_check
-      with: 
-        root: .
-        parser: dockerfile
+      - name: Update existing Dockerfile hashes
+        uses: vsoch/uptodate@main
+        id: dockerfile_check
+        with: 
+          root: .
+          parser: dockerfile
 
-    # This should not trigger a second time, since the token is not a PAT
-    - name: Update Recipes
-      if: (github.event_name == 'push')
-      env:
-        result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
+      # This should not trigger a second time, since the token is not a PAT
+      - name: Update Recipes
+        if: (github.event_name == 'push')
+        env:
+          result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           printf "GitHub Actor: ${GITHUB_ACTOR}\n"
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -85,27 +85,28 @@ jobs:
               printf "No changes\n"
           fi
 
-    - name: List all Dockerfile and save to matrix
-      uses: vsoch/uptodate@main
-      id: dockerfile_list
-      with: 
-        root: .
-        parser: dockerfilelist
-        flags: "--no-build-args"
-        changes: true # only include changed files
+      - name: List all Dockerfile and save to matrix
+        uses: vsoch/uptodate@main
+        id: dockerfile_list
+        with: 
+          root: .
+          parser: dockerfilelist
+          flags: "--no-build-args"
+          changes: true # only include changed files
 
-    - name: View and Check Build Matrix Result
-      id: empty_matrix
-      env:
-        result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
-      run: |
-        echo ${result}
-        if [[ "${result}" == "" ]]; then
-          printf "The matrix is empty, will not trigger next workflow.\n"
-          echo "::set-output name=empty_matrix::true"       
-        else
-          echo "::set-output name=empty_matrix::false"          
-        fi
+      - name: View and Check Build Matrix Result
+        id: empty_matrix
+        env:
+          result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
+        run: |
+          echo ${result}
+          if [[ "${result}" == "" ]]; then
+            printf "The matrix is empty, will not trigger next workflow.\n"
+            echo "::set-output name=empty_matrix::true"       
+          else
+            printf "The matrix is not empty, will trigger next workflow.\n"
+            echo "::set-output name=empty_matrix::false"          
+          fi
 
   build:
     needs:
