@@ -18,8 +18,8 @@ RUN apt-get -qq update && \
       pkg-config \
       python3-dev \
       python3-pip \
+      libssl-dev \
       sudo \
-      vim \
       wget \
       xsltproc
 
@@ -31,10 +31,8 @@ RUN python3 -m pip install --upgrade pip && \
 RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
 ENV PATH=/opt/spack/bin:$PATH
 
-# Install cmake
-RUN wget -q --no-check-certificate https://cmake.org/files/v3.18/cmake-3.18.6-Linux-x86_64.tar.gz && \
-    tar -xzf cmake-3.18.6-Linux-x86_64.tar.gz && \
-    rm -r cmake-3.18.6-Linux-x86_64/share/vim/vimfiles && \
-    cp -fR cmake-3.18.6-Linux-x86_64/* /usr && \
-    rm -rf cmake-3.18.6-Linux-x86_64 && \
-    rm cmake-3.18.6-Linux-x86_64.tar.gz
+# Find packages already installed on system, e.g. autoconf
+RUN spack external find && \
+
+    # Install a new CMake
+    spack install cmake@3.20.4
