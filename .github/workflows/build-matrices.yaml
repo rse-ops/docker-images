@@ -16,12 +16,25 @@ on:
 
 jobs:
   generate:
+    name: Generate Build Matrix
     runs-on: ubuntu-latest
     outputs:
       dockerbuild_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
+      empty_matrix: ${{ steps.check_matrix.outputs.empty_matrix }}
+
     steps:
-    - name: Checkout Actions Repository
-      uses: actions/checkout@v2
+    # Using git in the container to diff means we explicitly need to checkout a branch
+    # if we use the default of this action we get a detached HEAD state.
+    - uses: actions/checkout@v2
+      if: github.event_name == 'pull_request'
+      with:
+         fetch-depth: 0
+         ref: ${{ github.event.pull_request.head.ref }}
+
+    - uses: actions/checkout@v2
+      if: github.event_name == 'push'
+      with:
+         fetch-depth: 0
 
     - name: Generate Build Matrix
       uses: vsoch/uptodate@main
@@ -29,17 +42,21 @@ jobs:
       with: 
         root: .
         parser: dockerbuild
+        changes: true # only include changed uptodate.yaml
 
-  # Allows us to preview/see the matrix
-  view:
-    needs:
-      - generate
-    runs-on: ubuntu-latest
-    steps:
-      - name: View Docker Build Matrix Result
-        env:
-          result: ${{ needs.generate.outputs.dockerbuild_matrix }}
-        run: echo ${result}
+    - name: View and Check Build Matrix Result
+      id: empty_matrix
+      env:
+        result: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
+      run: |
+        echo ${result}
+        if [[ "${result}" == "" ]]; then
+          printf "The matrix is empty, will not trigger next workflow.\n"
+          echo "::set-output name=empty_matrix::true"       
+        else
+          printf "The matrix is not empty, and we should continue on to the next workflow.\n"
+          echo "::set-output name=empty_matrix::false"          
+        fi
 
   build:
     needs:
@@ -49,6 +66,7 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.generate.outputs.dockerbuild_matrix) }}
+    if: ${{ needs.generate.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.container_name }}"
     steps:
@@ -82,8 +100,8 @@ jobs:
         printf "Base directory is ${basedir}\n"
         # Get relative path to PWD and generate dashed name from it
         cd $basedir
-        echo "${prefix} -t ghcr.io/${container} ."
-        ${prefix} -t ghcr.io/${container} .
+        echo "${prefix} -t ghcr.io/rse-radiuss/${container} ."
+        ${prefix} -t ghcr.io/rse-radiuss/${container} .
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
@@ -91,5 +109,5 @@ jobs:
         container: ${{ matrix.result.container_name }}
       run: |
         docker images
-        printf "docker push ghcr.io/${container}\n"
-        docker push ghcr.io/${container}
+        printf "docker push ghcr.io/rse-radiuss/${container}\n"
+        docker push ghcr.io/rse-radiuss/${container}
