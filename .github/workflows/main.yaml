@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
-      empty_matrix: ${{ steps.check_matrix.outputs.empty_matrix }}
+      empty_matrix: ${{ steps.empty_matrix.outputs.empty_matrix }}
 
     steps:
 
