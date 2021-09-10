@@ -7,7 +7,6 @@ dockerbuild:
         - "10.1"
         - "11.1"
 
-    # Look for ubuntu versions for our base builds
     ubuntu_version:
       key: ubuntu
       versions:
