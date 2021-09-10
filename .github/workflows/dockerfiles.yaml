@@ -108,30 +108,6 @@ jobs:
             echo "::set-output name=empty_matrix::false"          
           fi
 
-  view:
-    needs:
-      - update
-    runs-on: ubuntu-latest
-    name: "Check/Debug Output"
-    steps:
-    - name: View Output
-      env:
-        result: ${{ needs.update.outputs.empty_matrix }}
-      run: |
-        echo ${result}
-        if [[ ${result} == "true" ]]; then
-           echo "RESULT IS TRUE"
-        fi
-        if [[ ${result} == true ]]; then
-           echo "RESULT IS TRUE"
-        fi
-        if [[ ${result} == "false" ]]; then
-           echo "RESULT IS FALSE"
-        fi
-        if [[ ${result} == false ]]; then
-           echo "RESULT IS FALSE"
-        fi
-
   build:
     needs:
       - update
