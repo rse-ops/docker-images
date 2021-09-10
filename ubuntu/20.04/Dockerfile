@@ -34,4 +34,4 @@ ENV PATH=/opt/spack/bin:$PATH
 RUN spack external find && \
 
     # Install a new CMake
-    spack install cmake@3.20.4
+    spack install openssl cmake@3.20.4
