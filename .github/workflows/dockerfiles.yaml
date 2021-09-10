@@ -119,16 +119,16 @@ jobs:
         result: ${{ needs.update.outputs.empty_matrix }}
       run: |
         echo ${result}
-        if [[ ${{result}} == "true" ]]; then
+        if [[ ${result} == "true" ]]; then
            echo "RESULT IS TRUE
         fi
-        if [[ ${{result}} == true ]]; then
+        if [[ ${result} == true ]]; then
            echo "RESULT IS TRUE
         fi
-        if [[ ${{result}} == "false" ]]; then
+        if [[ ${result} == "false" ]]; then
            echo "RESULT IS FALSE
         fi
-        if [[ ${{result}} == false ]]; then
+        if [[ ${result} == false ]]; then
            echo "RESULT IS FALSE
         fi
 
