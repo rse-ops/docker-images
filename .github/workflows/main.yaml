@@ -91,9 +91,23 @@ jobs:
         flags: "--no-build-args"
         changes: true # only include changed files
 
+    - name: View and Check Build Matrix Result
+      id: empty-matrix
+      env:
+        result: ${{ update.dockerfile_list.outputs.dockerfilelist_matrix }}
+      run: |
+        echo ${result}
+        if [[ "${result}" == "" ]]; then
+          printf "The matrix is empty, will not trigger next workflow.\n"
+          echo "::set-output name=empty_matrix::true"       
+        else
+          echo "::set-output name=empty_matrix::false"          
+        fi
+
   build:
     needs:
       - update
+    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
