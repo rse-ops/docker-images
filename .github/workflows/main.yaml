@@ -94,7 +94,7 @@ jobs:
     - name: View and Check Build Matrix Result
       id: empty-matrix
       env:
-        result: ${{ update.dockerfile_list.outputs.dockerfilelist_matrix }}
+        result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
       run: |
         echo ${result}
         if [[ "${result}" == "" ]]; then
