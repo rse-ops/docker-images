@@ -40,7 +40,7 @@ jobs:
       with: 
         root: .
         parser: dockerbuild
-        changes: false # only include changed uptodate.yaml
+        changes: true # only include changed uptodate.yaml
 
   # Allows us to preview/see the matrix
   view:
