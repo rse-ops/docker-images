@@ -58,6 +58,7 @@ jobs:
           if [[ "${result}" == "" ]]; then
             echo "::set-output name=empty_matrix::true"       
           else
+            printf "The matrix is empty, will not trigger next workflow.\n"
             echo "::set-output name=empty_matrix::false"          
           fi
 
