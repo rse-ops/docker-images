@@ -24,8 +24,19 @@ jobs:
     outputs:
       dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
     steps:
-    - name: Checkout Actions Repository
-      uses: actions/checkout@v2
+
+    # Using git in the container to diff means we explicitly need to checkout a branch
+    # if we use the default of this action we get a detached HEAD state.
+    - uses: actions/checkout@v2
+      if: github.event_name == 'pull_request'
+      with:
+         fetch-depth: 0
+         ref: ${{ github.event.pull_request.head.ref }}
+
+    - uses: actions/checkout@v2
+      if: github.event_name == 'push'
+      with:
+         fetch-depth: 0
 
     - name: Add new Dockerfiles for build
       uses: vsoch/uptodate@main
@@ -78,10 +89,25 @@ jobs:
         root: .
         parser: dockerfilelist
         flags: "--no-build-args"
+        changes: true # only include changed files
+
+    - name: View and Check Build Matrix Result
+      id: empty-matrix
+      env:
+        result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
+      run: |
+        echo ${result}
+        if [[ "${result}" == "" ]]; then
+          printf "The matrix is empty, will not trigger next workflow.\n"
+          echo "::set-output name=empty_matrix::true"       
+        else
+          echo "::set-output name=empty_matrix::false"          
+        fi
 
   build:
     needs:
       - update
+    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
