@@ -12,7 +12,7 @@ ENV TZ=America/Los_Angeles
 RUN apt-get -qq update && \
     apt-get -qq install -y --no-install-recommends \
       wget \
-      python3-dev
+      python3-dev \
       python3-pip \
       build-essential \
       sudo \
