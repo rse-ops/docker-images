@@ -37,7 +37,7 @@ jobs:
            ref: ${{ github.event.pull_request.head.ref }}
 
       - uses: actions/checkout@v2
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         with:
            fetch-depth: 0
 
