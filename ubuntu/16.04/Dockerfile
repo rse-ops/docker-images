@@ -1,4 +1,4 @@
-FROM ubuntu:16.04@sha256:454054f5bbd571b088db25b662099c6c7b3f0cb78536a2077d54adc48f00cd68
+FROM ubuntu:16.04
 
 # docker build -t ghcr.io/llnl/radiuss-docker/ubuntu:<version> .
 
