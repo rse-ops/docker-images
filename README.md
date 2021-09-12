@@ -11,7 +11,9 @@ automation and development.
 This repository contains Dockerfiles for CI builds for use by the various
 [RADIUSS](https://software.llnl.gov/radiuss/) projects, and anyone else that
 might be interested. The image builds are automated and self-updating, and process
-described more below in detail.
+described more below in detail. You can see the listing of updated builds at:
+
+⭐️ [RADIUSS DOCKER BUILDS TABLE](https://rse-radiuss.github.io/docker-images/) ⭐️
 
 ## How does it work?
 
@@ -51,6 +53,12 @@ the Dockerfile found under this root use build arguments.
 This is a different approach than a core base image because unlike base images that can
 vary, for matrix builds we want to use a common template with different build arguments.
 
+
+## Interface
+
+After an image is built and deployed, an entry is generated for the [library interface](https://rse-radiuss.github.io/docker-images/).
+This includes names, versions, and links to metadata to further inspect or interact with the images. The interface also exposes
+a [RESTful endpoint](https://rse-radiuss.github.io/docker-images/library.json) in case you'd like to interact programatically.
 
 License
 -------
