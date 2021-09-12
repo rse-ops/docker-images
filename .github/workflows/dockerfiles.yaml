@@ -153,15 +153,67 @@ jobs:
         printf "Container is ${container}\n"
         cat ${{ matrix.result.name }}
         cd $basedir
-        docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
-        echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
-        # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
+        docker build -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
+        echo ::set-output name=container_uri::ghcr.io/rse-radiuss/${container}:${tag}
+        echo ::set-output name=container::ghcr.io/rse-radiuss/${container}
+        echo ::set-output name=tag:::${tag}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
       env:
-        container: ${{ steps.builder.outputs.container }}
+        uri: ${{ steps.builder.outputs.container_uri }}
       run: |
         docker images
-        printf "docker push ${{ env.container }}\n"
-        docker push ${{ env.container }}
+        printf "docker push ${{ env.uri }}\n"
+        docker push ${{ env.uri }}
+
+    - name: Prepare Library Record
+      id: summary
+      env:
+        uri: ${{ steps.builder.outputs.uri }}
+      run: |
+        docker system prune -f
+        docker image save "${{ env.uri }}" > container
+        tar -czvf container.tar.gz container > /dev/null
+        docker_system=$(docker system df -v | grep "$container")
+        docker_data=($docker_system)
+        raw=$(ls -lh --block-size=MB | grep "container.tar.gz")
+        raw_data=($raw)
+        echo "[[ Build Summary: $container ]]"
+        echo "URL              :  ${docker_data[0]}"
+        echo "Version          :  ${docker_data[1]}"
+        echo "Raw Size         :  ${docker_data[6]}"
+        echo "Compressed Size  :  ${raw_data[4]}"
+        echo "::set-output name=compressed_size::${raw_data[4]}"
+
+    - name: Library Deploy
+      if: (github.event_name != 'pull_request')
+      env:
+        container: ${{ steps.builder.outputs.container }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        compressed_size: ${{ steps.summary.outputs.compressed_size }}
+      run: |
+        printf "GitHub Actor: ${GITHUB_ACTOR}\n"
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@users.noreply.github.com"
+
+        # Clone GitHub pages branch with site
+        git clone -b ${branch} https://github.com/${GITHUB_REPOSITORY} /tmp/radiuss
+        cd /tmp/radiuss
+        
+        # Generate new entry for container
+        python scripts/update-site.py gen ${{ env.container }} --outdir $PWD/_library \ --size ${{ env.compressed_size }} --dockerfile ${{ matrix.result.name }}
+        git add _library/*.md
+
+        set +e
+        git status | grep modified
+        if [ $? -eq 0 ]; then
+            set -e
+            printf "Changes\n"
+            git commit -m "Automated push to update library $(date '+%Y-%m-%d')" || exit 0
+            git push origin ${branch}
+        else
+            set -e
+            printf "No changes\n"
+        fi
