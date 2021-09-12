@@ -14,3 +14,5 @@ $ python scripts/update-site.py gen ghcr.io/rse-radiuss/nvidia-ubuntu --outdir $
 $ python scripts/update-site.py gen ghcr.io/rse-radiuss/clang-ubuntu-20.04 --outdir $PWD/_library --dockerfile ubuntu/clang
 $ python scripts/update-site.py gen ghcr.io/rse-radiuss/cuda-ubuntu-20.04 --outdir $PWD/_library --dockerfile ubuntu/cuda
 ```
+
+The workflow runs from the main branch, and will update on any pushes to it.
