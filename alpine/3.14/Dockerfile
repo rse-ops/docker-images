@@ -5,7 +5,7 @@ LABEL maintainer="@vsoch"
 ENV TZ=America/Los_Angeles
 
 RUN apk update && \
-    apt install -fy git python3 && ln -sf python3 /usr/bin/python && \
+    apk install -fy git python3 && ln -sf python3 /usr/bin/python && \
     python3 -m ensurepip && \
     pip3 install --no-cache --upgrade pip setuptools && \
     python3 -m pip install clingo
