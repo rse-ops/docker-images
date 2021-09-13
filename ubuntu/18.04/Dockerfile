@@ -24,8 +24,6 @@ RUN apt-get -qq update && \
 RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
 ENV PATH=/opt/spack/bin:$PATH
 
-# Find packages already installed on system, e.g. autoconf
+# Find packages already installed on system, e.g. autoconf and install cmake
 RUN spack external find && \
-
-    # Install a new CMake (used to be 3.18.0)
     spack install cmake@3.20.4
