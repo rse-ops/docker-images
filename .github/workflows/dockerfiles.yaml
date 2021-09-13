@@ -170,7 +170,7 @@ jobs:
 
     - name: Run Librarian
       id: runner
-      uses: rse-radiuss/librarian/docker-images@main
+      uses: rse-radiuss/librarian/docker-images@tweaks
       with:        
           container: ${{ steps.builder.outputs.uri }} 
           dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
