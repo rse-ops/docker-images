@@ -155,7 +155,7 @@ jobs:
         cd $basedir
         docker build -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
         echo ::set-output name=container_uri::ghcr.io/rse-radiuss/${container}:${tag}
-        echo ::set-output name=container::ghcr.io/rse-radiuss/${container}
+        echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
         echo ::set-output name=tag:::${tag}
 
     - name: Deploy Container
@@ -172,7 +172,6 @@ jobs:
       env:
         uri: ${{ steps.builder.outputs.uri }}
       run: |
-        docker system prune -f
         docker image save "${{ env.uri }}" > container
         tar -czvf container.tar.gz container > /dev/null
         docker_system=$(docker system df -v | grep "$container")
