@@ -153,15 +153,27 @@ jobs:
         printf "Container is ${container}\n"
         cat ${{ matrix.result.name }}
         cd $basedir
-        docker build -f Dockerfile -t ghcr.io/rse-radiuss/${container}:${tag} .
-        echo ::set-output name=container::ghcr.io/rse-radiuss/${container}:${tag}
-        # TODO this and size should be saved to site / gh-pages, for something like autamus librarian!
+        docker build -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
+        echo ::set-output name=container_uri::ghcr.io/rse-radiuss/${container}:${tag}
+        echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
+        echo ::set-output name=tag::${tag}
+        echo ::set-output name=dockerfile_dir::${basedir}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
       env:
-        container: ${{ steps.builder.outputs.container }}
+        uri: ${{ steps.builder.outputs.container_uri }}
       run: |
         docker images
-        printf "docker push ${{ env.container }}\n"
-        docker push ${{ env.container }}
+        printf "docker push ${{ env.uri }}\n"
+        docker push ${{ env.uri }}
+
+    - name: Run Librarian
+      id: runner
+      if: (github.event_name != 'pull_request')
+      uses: rse-radiuss/librarian/docker-images@main
+      with:        
+          container: ${{ steps.builder.outputs.uri }} 
+          dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # defaults to branch: gh-pages, deploy: true, outdir: pwd

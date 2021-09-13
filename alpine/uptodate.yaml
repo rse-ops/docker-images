@@ -1,0 +1,7 @@
+dockerhierarchy:
+  container:
+    name: alpine
+    filter: 
+     # we only want XX.14 versions
+     - "^[0-9]+[.]14$"
+    startat: "3.14"
