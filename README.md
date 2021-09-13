@@ -90,6 +90,43 @@ dockerhierarchy:
       - "21.04"
 ```
 
+### 2. Add a new matrix image?
+
+A matrix image is what you want when you have a particular base image that you want to iterate some number of versions / variables for, and this means using a common Dockerfile. E.g., "I want to use the base ghcr.io/rse-radiuss/ubuntu:20.04 and build with three versions of library X. To add a matrix build you should:
+
+1. Determine if the base container you want to use is represented here. E.g., the ghcr.io/rse-radiuss/ubuntu container is built from ubuntu. If we wanted to do a matrix build of cuda, we might create the directory [ubuntu/cuda](ubuntu/cuda) (news flash, we already have that one!) You don't need to worry about the hierarchy of the ubuntu folder being tags as long as the directory you write is not a known tag that is specified to parse (in this case matching the pattern XX.04 for LTS versions). The directory "cuda" will be safely ignored!
+2. In this directory, write a Dockerfile that accepts one or more build args for variables that you want to iterate over.
+3. Also in this directory, write an uptodate.yaml that includes one or more buildargs that can be hard coded variables, spack packages, or other containers. See the subfolders of [ubuntu](ubuntu) that have `dockerbuild` in the uptodate.yaml for an example.
+4. Open a pull request, communicte the gist of your contribution, and ask any questions!
+
+Here is an example of an uptodate.yaml that will create a build matrix of ubuntu versions and spack packages:
+
+```yaml
+dockerbuild:
+  build_args:
+    cuda_version:
+      key: cuda
+      versions:
+       - "10.1.243"
+       - "11.0.3"
+       - "11.1.1"
+       - "11.2.2"
+       - "11.3.1"
+       - "11.4.0"
+
+    # Look for ubuntu versions for our base builds
+    ubuntu_version:
+      key: ubuntu
+      name: ghcr.io/rse-radiuss/ubuntu
+      type: container
+      startat: "20.04"
+      filter: 
+        - "^[0-9]+[.]04$"
+```
+For more details on creating a docker build matrix, see the [uptodate docs](https://vsoch.github.io/uptodate/docs/#/user-guide/user-guide?id=docker-build).
+
+And if there is another type of build you want to add not represented here, please [open an issue](https://github.com/rse-radiuss/docker-images/issues).
+
 License
 -------
 
