@@ -175,6 +175,7 @@ jobs:
           container: ${{ steps.builder.outputs.uri }} 
           dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
           outdir: ./_library
+          token: ${{ secrets.GITHUB_TOKEN }}
           # defaults to branch: gh-pages and deploy: true          
           # branch: gh-pages 
           deploy: false
