@@ -170,11 +170,10 @@ jobs:
 
     - name: Run Librarian
       id: runner
-      uses: rse-radiuss/librarian/docker-images@tweaks
+      if: (github.event_name != 'pull_request')
+      uses: rse-radiuss/librarian/docker-images@main
       with:        
           container: ${{ steps.builder.outputs.uri }} 
           dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
           token: ${{ secrets.GITHUB_TOKEN }}
           # defaults to branch: gh-pages, deploy: true, outdir: pwd
-          # branch: gh-pages 
-          deploy: false
