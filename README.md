@@ -29,7 +29,7 @@ The root directory they are found in determines their scope (and the content the
 The two keys you will see in the file are `dockerhierarchy` and `dockerbuild` for the last two bullets.
 More detail of how this works in context of our needs to build base and higher level images is detailed below.
 
-## Base Images
+### Base Images
 
 A core base image is considered the lowest level - an operating system with
 only a handful of additional dependencies that won't vary with the operating system.
@@ -44,7 +44,7 @@ to maintain subfolders that correspond with the latest tags of the ubuntu image.
 A folder that does not correspond to a tag (e.g., clang) is a matrix build, and only
 organized as such to indicate that it uses the ubuntu base. Matrix builds are discussed next.
 
-## Matrix Images
+### Matrix Images
 
 A matrix image uses a base image, as described above, to create a matrix of different
 builds. This means that the `uptodate.yaml` in some root directory will have a `dockerbuild`
@@ -54,11 +54,41 @@ This is a different approach than a core base image because unlike base images t
 vary, for matrix builds we want to use a common template with different build arguments.
 
 
-## Interface
+### Interface
 
 After an image is built and deployed, an entry is generated for the [library interface](https://rse-radiuss.github.io/docker-images/).
 This includes names, versions, and links to metadata to further inspect or interact with the images. The interface also exposes
 a [RESTful endpoint](https://rse-radiuss.github.io/docker-images/library.json) in case you'd like to interact programatically.
+
+
+## How do I...
+
+### 1. Add a new base image?
+
+A base image is some derivative of an existing OS image (e.g., ubuntu or alpine from Docker Hub) that you want to add some
+special sauce to, like some editors, compilers, or spack. To add a base image you should ask and answer the following questions.
+
+1. You will need to create a new folder for your image. E.g., the docker hub ubuntu `FROM` that we extend on maps to [ubuntu](ubuntu), and a similar ubuntu image with nvidia drivers is [nvidia-ubuntu](nvidia-ubuntu). 
+2. Create subfolders that correspond to the tags that you want, and in each one write a Dockerfile. You can look at [ubuntu](ubuntu) as an example. Generally, we have multiple `Dockerfile`s like this for base images because each is different enough to make it hard to template.
+3. Add an uptodate.yaml in the root directory (e.g., `ubuntu/uptodate.yaml`). You'll want to define a [docker hierarchy](https://vsoch.github.io/uptodate/docs/#/user-guide/user-guide?id=docker-hierarchy) that tells the nightly updater how to look for new tags (versions) that will be created as new directories. As an example, see below.
+4. Open a pull request, communicate the gist of your changes, and ask any questions that you might have.
+
+
+```yaml
+dockerhierarchy:
+  container:
+    name: ubuntu
+    filter: 
+     # we only want XX.04 versions
+     - "^[0-9]+[.]04$"
+    startat: "16.04"
+    
+    # Versions to skip (not LTS releases)
+    skips:
+      - "17.04"
+      - "19.04"
+      - "21.04"
+```
 
 License
 -------
