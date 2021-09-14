@@ -20,5 +20,6 @@ RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
 ENV PATH=/opt/spack/bin:$PATH
 
 # Find packages already installed on system, e.g. autoconf
-RUN spack external find && \
-    spack install cmake@3.20.4
+RUN spack external find # && \
+# commented out to make build faster for debugging, will uncomment
+#    spack install cmake@3.20.4
