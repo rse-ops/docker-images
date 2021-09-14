@@ -66,7 +66,7 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.generate.outputs.dockerbuild_matrix) }}
-    if: ${{ needs.generate.outputs.empty_matrix == 'false' }}
+    if: ${{ needs.generate.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.container_name }}"
     steps:
@@ -102,6 +102,8 @@ jobs:
         cd $basedir
         echo "${prefix} -t ghcr.io/rse-radiuss/${container} ."
         ${prefix} -t ghcr.io/rse-radiuss/${container} .
+        echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
+        echo ::set-output name=dockerfile_dir::${basedir}
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
@@ -111,3 +113,15 @@ jobs:
         docker images
         printf "docker push ghcr.io/rse-radiuss/${container}\n"
         docker push ghcr.io/rse-radiuss/${container}
+
+    - name: Run Librarian
+      id: runner
+      if: (github.event_name != 'pull_request')
+      uses: rse-radiuss/librarian/docker-images@main
+      with:
+          container: ${{ steps.builder.outputs.uri }} 
+          dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          outdir: _library
+          # defaults to branch: gh-pages, deploy: true, outdir: pwd
+          # outdir is in context of the gh-pages branch, not here.
