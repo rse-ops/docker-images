@@ -1,7 +1,7 @@
 ARG ubuntu_version
 FROM ghcr.io/rse-radiuss/ubuntu:$ubuntu_version
 
-# Install llvm with spack
+# Install with spack
 ARG hip_version
 ENV hip_version=$hip_version
 
