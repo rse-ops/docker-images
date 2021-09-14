@@ -100,7 +100,7 @@ jobs:
           result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
         run: |
           echo ${result}
-          if [[ "${result}" == "" ]]; then
+          if [[ "${result}" == "[]" ]]; then
             printf "The matrix is empty, will not trigger next workflow.\n"
             echo "::set-output name=empty_matrix::true"       
           else
@@ -116,7 +116,7 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
-    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
+    if: ${{ needs.update.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.name }}"
     steps:
