@@ -9,8 +9,8 @@ dockerbuild:
       filter: 
         - "^[0-9]+[.]0[.]0$"
 
-      # Greater than 10.0.0
-      startat: "10.0.0"
+      # Greater than 9.0.0
+      startat: "9.0.0"
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
