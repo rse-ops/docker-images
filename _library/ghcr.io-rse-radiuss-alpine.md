@@ -9,5 +9,4 @@ versions:
  - tag: 3.14
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/alpine/3.14/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/alpine:3.14
-
 ---

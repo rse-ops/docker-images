@@ -114,8 +114,9 @@
                   <div class="tab-content tab-space">
                     <div class="tab-pane active" id="link4">
                       <h3>Basic Usage</h3>
-                      <p><pre><code class="highlight">Download        : docker pull ghcr.io/rse-radiuss/{{ page.name }}{% if size %}
-Compressed Size : {{ size }}MB{% endif %}
+                      <p><pre><code class="highlight">Download        : docker pull ghcr.io/rse-radiuss/{{ page.name }}{% if page.size %}
+Compressed Size : {{ page.size }}MB{% endif %}{% if page.raw_size %}
+Raw Size : {{ page.raw_size }}MB{% endif %}
 </code></pre></p>
                        <br>
                        <h3>Pull (download)</h3>
@@ -154,7 +155,7 @@ RUN ...
                          </tr>
                         </thead>
                         <tbody>
-                          {% for entry in page.versions %}<tr><td>{{ entry.tag }}</td><td>{{ entry.name }}:{{ entry.tag }}</td><td>{% if entry.dockerfile %}<a href="{{ entry.dockerfile }}" target="_blank">Dockerfile</a>{% endif %}</td><td><a href="{{ entry.manifest }}" target="_blank">Manifest</a></td></tr>{% endfor %}
+                          {% for entry in page.versions %}<tr><td>{{ entry.tag }}</td><td>{{ page.name }}:{{ entry.tag }}</td><td>{% if entry.dockerfile %}<a href="{{ entry.dockerfile }}" target="_blank">Dockerfile</a>{% endif %}</td><td><a href="{{ entry.manifest }}" target="_blank">Manifest</a></td></tr>{% endfor %}
                         </tbody>
                         </table>
                       </p>
