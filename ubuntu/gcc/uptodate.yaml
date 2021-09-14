@@ -1,0 +1,20 @@
+dockerbuild:
+  build_args:
+    gcc_version:
+      key: gcc
+      versions:
+       - "4.9.3"
+       _ "7.3.0"
+       _ "8.1.0"
+       _ "9.4.0"
+       _ "10.3.0"
+       _ "11.2.0"
+
+    # Look for ubuntu versions for our base builds
+    ubuntu_version:
+      key: ubuntu
+      name: ghcr.io/rse-radiuss/ubuntu
+      type: container
+      startat: "20.04"
+      filter: 
+        - "^[0-9]+[.]04$"
