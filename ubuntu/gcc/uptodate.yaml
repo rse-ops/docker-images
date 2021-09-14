@@ -5,10 +5,10 @@ dockerbuild:
       versions:
        - "4.9.3"
        - "7.3.0"
-       _ "8.1.0"
-       _ "9.4.0"
-       _ "10.3.0"
-       _ "11.2.0"
+       - "8.1.0"
+       - "9.4.0"
+       - "10.3.0"
+       - "11.2.0"
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
