@@ -2,6 +2,8 @@ FROM ubuntu:20.04@sha256:9d6a8699fb5c9c39cf08a0871bd6219f0400981c570894cd8cbea30
 
 LABEL maintainer="Chris White <white238@llnl.gov>,@vsoch"
 
+ARG uptodate_github_spack__spack=v0.16.2
+ENV spack_version=${uptodate_github_spack__spack}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
@@ -28,7 +30,12 @@ RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install clingo
 
 # Install spack
-RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
+WORKDIR /opt
+RUN wget https://github.com/spack/spack/archive/refs/tags/${spack_version}.tar.gz && \
+    tar -xzvf ${spack_version}.tar.gz && \
+    rm ${spack_version}.tar.gz && \
+    mkdir spack && \
+    tar -xzvf ${spack_version}.tar.gz -C spack  --strip-components 1
 ENV PATH=/opt/spack/bin:$PATH
 
 # Find packages already installed on system, e.g. autoconf
