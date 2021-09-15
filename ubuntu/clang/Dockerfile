@@ -13,3 +13,4 @@ RUN apt-get update && apt-get install -y gnupg2 python3-dev python3-pip && \
     spack gpg trust key.pub
 
 RUN spack install llvm@${llvm_version}
+RUN spack view symlink /opt/view llvm@${llvm_version}

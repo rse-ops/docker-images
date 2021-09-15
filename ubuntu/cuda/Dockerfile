@@ -6,3 +6,4 @@ ARG cuda_version
 ENV cuda_version=$cuda_version
 
 RUN spack install cuda@${cuda_version}
+RUN spack view symlink /opt/view cuda@${cuda_version}
