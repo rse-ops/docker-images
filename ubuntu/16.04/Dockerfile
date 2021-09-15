@@ -2,8 +2,8 @@ FROM ubuntu:16.04@sha256:454054f5bbd571b088db25b662099c6c7b3f0cb78536a2077d54adc
 
 # docker build -t ghcr.io/rse-radiuss/ubuntu:<version> .
 
-ARG uptodate_github_commit_spack__spack__develop=v0.16.2
-ENV spack_version=${uptodate_github_spack__spack}
+ARG uptodate_github_commit_spack__spack__develop=NA
+ENV spack_version=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
@@ -21,7 +21,8 @@ RUN apt-get -qq update && \
       ninja-build \
       libssl-dev \
       ca-certificates \
-      valgrind
+      valgrind \
+      gnupg2 
 
 # Install spack
 # Install spack
@@ -31,6 +32,12 @@ RUN wget https://github.com/spack/spack/archive/refs/tags/${spack_version}.tar.g
     tar -xzvf ${spack_version}.tar.gz -C spack  --strip-components 1 && \
     rm ${spack_version}.tar.gz
 ENV PATH=/opt/spack/bin:$PATH
+
+# Use the autamus build cache for maybe faster install?
+RUN pip install botocore boto3 && \
+    spack mirror add autamus s3://autamus-cache && \
+    curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
+    spack gpg trust key.pub
 
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find && \

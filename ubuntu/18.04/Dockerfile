@@ -2,8 +2,8 @@ FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=v0.16.2
-ENV spack_version=${uptodate_github_spack__spack}
+ARG uptodate_github_commit_spack__spack__develop=NA
+ENV spack_version=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
@@ -20,7 +20,8 @@ RUN apt-get -qq update && \
       ninja-build \
       libssl-dev \
       ca-certificates \
-      valgrind
+      valgrind \
+      gnupg2
 
 # Install spack
 WORKDIR /opt
@@ -29,6 +30,12 @@ RUN wget https://github.com/spack/spack/archive/refs/tags/${spack_version}.tar.g
     tar -xzvf ${spack_version}.tar.gz -C spack  --strip-components 1 && \
     rm ${spack_version}.tar.gz
 ENV PATH=/opt/spack/bin:$PATH
+
+# Use the autamus build cache for maybe faster install?
+RUN pip install botocore boto3 && \
+    spack mirror add autamus s3://autamus-cache && \
+    curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
+    spack gpg trust key.pub
 
 # Find packages already installed on system, e.g. autoconf and install cmake
 RUN spack external find && \
