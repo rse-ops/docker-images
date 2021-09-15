@@ -2,8 +2,8 @@ FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=NA
-ENV spack_version=${uptodate_github_commit_spack__spack__develop}
+ARG uptodate_github_commit_spack__spack__develop=0015f700b77247873d06ddd12c496ebb782d4713
+ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
@@ -25,10 +25,9 @@ RUN apt-get -qq update && \
 
 # Install spack
 WORKDIR /opt
-RUN wget https://github.com/spack/spack/archive/refs/tags/${spack_version}.tar.gz && \
-    mkdir spack && \
-    tar -xzvf ${spack_version}.tar.gz -C spack  --strip-components 1 && \
-    rm ${spack_version}.tar.gz
+RUN git clone https://github.com/spack/spack && \
+    cd spack && \
+    git reset --hard ${spack_commit}
 ENV PATH=/opt/spack/bin:$PATH
 
 # Use the autamus build cache for maybe faster install?
