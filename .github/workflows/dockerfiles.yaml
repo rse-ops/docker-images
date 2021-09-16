@@ -97,8 +97,10 @@ jobs:
       - name: View Build Matrix Result
         env:
           result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
+          is_empty: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix_empty }}
         run: |
           echo ${result}
+          echo ${is_empty}
           if [[ "${result}" == "[]" ]]; then
             printf "The matrix is empty, will not trigger next workflow.\n"
           else
