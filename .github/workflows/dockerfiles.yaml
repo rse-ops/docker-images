@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
-      empty_matrix: ${{ steps.empty_matrix.outputs.empty_matrix }}
+      empty_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix_empty }}
 
     steps:
 
@@ -91,21 +91,20 @@ jobs:
         with: 
           root: .
           parser: dockerfilelist
-          flags: "--no-build-args"
+          flags: "--no-empty-build-args"
           changes: true # only include changed files
 
-      - name: View and Check Build Matrix Result
-        id: empty_matrix
+      - name: View Build Matrix Result
         env:
           result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
+          is_empty: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix_empty }}
         run: |
           echo ${result}
+          echo ${is_empty}
           if [[ "${result}" == "[]" ]]; then
             printf "The matrix is empty, will not trigger next workflow.\n"
-            echo "::set-output name=empty_matrix::true"       
           else
             printf "The matrix is not empty, and we should continue on to the next workflow.\n"
-            echo "::set-output name=empty_matrix::false"          
           fi
 
   build:
@@ -116,7 +115,7 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
-    if: ${{ needs.update.outputs.empty_matrix == false }}
+    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
 
     name: "Build ${{ matrix.result.name }}"
     steps:

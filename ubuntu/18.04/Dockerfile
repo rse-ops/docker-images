@@ -2,36 +2,44 @@ FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_spack__spack=v0.16.2
-ENV spack_version=${uptodate_github_spack__spack}
+ARG uptodate_github_commit_spack__spack__develop=c0122242ee90f0fe37edceb8d25f5ebd4a48cf19
+ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
 RUN apt-get -qq update && \
     apt-get -qq install -y --no-install-recommends \
-      wget \
-      python3-dev \
-      python3-pip \
       build-essential \
-      sudo \
-      git \
-      vim \
-      dh-autoreconf \
-      ninja-build \
-      libssl-dev \
       ca-certificates \
-      valgrind
+      curl \
+      dh-autoreconf \
+      git \
+      gnupg2 \
+      libssl-dev \
+      ninja-build \
+      python-dev \ 
+      python3-pip \
+      sudo \
+      valgrind \
+      vim \
+      wget
 
 # Install spack
 WORKDIR /opt
-RUN wget https://github.com/spack/spack/archive/refs/tags/${spack_version}.tar.gz && \
-    tar -xzvf ${spack_version}.tar.gz && \
-    rm ${spack_version}.tar.gz && \
-    mkdir spack && \
-    tar -xzvf ${spack_version}.tar.gz -C spack  --strip-components 1
-
+RUN git clone https://github.com/spack/spack && \
+    cd spack && \
+    git reset --hard ${spack_commit}
 ENV PATH=/opt/spack/bin:$PATH
+
+# Use the autamus build cache for maybe faster install?
+RUN python3 -m pip install botocore boto3 && \
+    spack mirror add autamus s3://autamus-cache && \
+    curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
+    spack gpg trust key.pub
 
 # Find packages already installed on system, e.g. autoconf and install cmake
 RUN spack external find && \
     spack install cmake@3.20.4
+
+RUN spack view symlink /opt/view cmake@3.20.4
+ENV PATH=/opt/view/bin:$PATH

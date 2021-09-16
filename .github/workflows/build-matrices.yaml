@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       dockerbuild_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
-      empty_matrix: ${{ steps.check_matrix.outputs.empty_matrix }}
+      empty_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix_empty }}
 
     steps:
     # Using git in the container to diff means we explicitly need to checkout a branch
@@ -45,17 +45,14 @@ jobs:
         changes: true # only include changed uptodate.yaml
 
     - name: View and Check Build Matrix Result
-      id: empty_matrix
       env:
         result: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
       run: |
         echo ${result}
         if [[ "${result}" == "" ]]; then
           printf "The matrix is empty, will not trigger next workflow.\n"
-          echo "::set-output name=empty_matrix::true"       
         else
           printf "The matrix is not empty, and we should continue on to the next workflow.\n"
-          echo "::set-output name=empty_matrix::false"          
         fi
 
   build:
