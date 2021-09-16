@@ -4,7 +4,7 @@ dockerbuild:
       key: gcc
       versions:
        # Needs patch from spack https://github.com/spack/spack/pull/25945
-       # - "4.9.3"
+       - "4.9.3"
        - "7.3.0"
        - "8.1.0"
        - "9.4.0"
