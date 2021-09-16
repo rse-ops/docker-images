@@ -9,19 +9,20 @@ ENV TZ=America/Los_Angeles
 
 RUN apt-get -qq update && \
     apt-get -qq install -y --no-install-recommends \
-      wget \
-      python3-dev \
-      python3-pip \
       build-essential \
-      sudo \
-      git \
-      vim \
-      dh-autoreconf \
-      ninja-build \
-      libssl-dev \
       ca-certificates \
+      curl \
+      dh-autoreconf \
+      git \
+      gnupg2 \
+      libssl-dev \
+      ninja-build \
+      python-dev \ 
+      python3-pip \
+      sudo \
       valgrind \
-      gnupg2
+      vim \
+      wget
 
 # Install spack
 WORKDIR /opt

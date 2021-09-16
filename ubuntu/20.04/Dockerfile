@@ -9,22 +9,24 @@ ENV TZ=America/Los_Angeles
 
 RUN apt-get -qq update && \
     apt-get -qq install -fy tzdata && \
-    apt-get -qq install -fy --no-install-recommends \
+    apt-get -qq install -y --no-install-recommends \
       build-essential \
       ca-certificates \
       curl \
       dh-autoreconf \
       git \
+      gnupg2 \
       lcov \
+      libssl-dev \
       ninja-build \
       pkg-config \
-      python3-dev \
+      python-dev \ 
       python3-pip \
-      libssl-dev \
       sudo \
+      valgrind \
+      vim \
       wget \
-      xsltproc \
-      gnupg2
+      xsltproc
 
 # Install Clingo for Spack
 RUN python3 -m pip install --upgrade pip && \
