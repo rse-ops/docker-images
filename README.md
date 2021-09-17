@@ -38,6 +38,7 @@ For comparison with the [previous axom repository](https://github.com/LLNL/axom-
 Currently, the following directories hold base images:
 
  - [ubuntu](ubuntu): builds ubuntu bases. The subfolders (e.g., clang, gcc) are for matrix builds.
+ - [alpine](alpine): a smaller image with alpine (probably mostly for testing)
 
 In the `uptodate.yaml` here you'll find the `dockerhierarchy` key, which means we always want
 to maintain subfolders that correspond with the latest tags of the ubuntu image.
@@ -48,11 +49,23 @@ organized as such to indicate that it uses the ubuntu base. Matrix builds are di
 
 A matrix image uses a base image, as described above, to create a matrix of different
 builds. This means that the `uptodate.yaml` in some root directory will have a `dockerbuild`
-section that specifies how to generate the matrices. You'll also notice, thus, that
-the Dockerfile found under this root use build arguments. 
+section that specifies how to generate the matrices. How are these triggered? When a matrix
+build is done, the build args that are containers are added as labels. Then when a nightly check
+is done, we compare the current labels from [a config manifest](https://crane.ggcr.dev/config/ghcr.io/rse-radiuss/ubuntu:18.04)
+with the latest tags found for the container build args, and re-build if they are different,
+or if there are latest build args found but no labels for it (indicating a change in the image).
+
+You'll also notice, thus, that the Dockerfile found under this root use build arguments. 
 This is a different approach than a core base image because unlike base images that can
 vary, for matrix builds we want to use a common template with different build arguments.
 
+### Dockerfiles
+
+For any Dockerfile in the repository that has a FROM statement (that doesn't use a build arg)
+we also check for updated hashes for that particular tag. For build arguments that follow
+[any of these patterns](https://vsoch.github.io/uptodate/docs/#/user-guide/user-guide?id=build-arguments) 
+we can also easily update versions of build args that are
+versions from spack, GitHub repository releases or commits, or container identifiers.
 
 ### Interface
 
