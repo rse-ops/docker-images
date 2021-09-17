@@ -37,19 +37,19 @@ jobs:
          fetch-depth: 0
 
     - name: Generate Build Matrix
-      uses: vsoch/uptodate@main
+      uses: vsoch/uptodate@add/docker-build-check-for-updates
       id: dockerbuild
       with: 
         root: .
         parser: dockerbuild
-        changes: true # only include changed uptodate.yaml
+        flags: "--registry ghcr.io/rse-radiuss"
 
     - name: View and Check Build Matrix Result
       env:
         result: ${{ steps.dockerbuild.outputs.dockerbuild_matrix }}
       run: |
         echo ${result}
-        if [[ "${result}" == "" ]]; then
+        if [[ "${result}" == "[]" ]]; then
           printf "The matrix is empty, will not trigger next workflow.\n"
         else
           printf "The matrix is not empty, and we should continue on to the next workflow.\n"
@@ -97,9 +97,9 @@ jobs:
         printf "Base directory is ${basedir}\n"
         # Get relative path to PWD and generate dashed name from it
         cd $basedir
-        echo "${prefix} -t ghcr.io/rse-radiuss/${container} ."
-        ${prefix} -t ghcr.io/rse-radiuss/${container} .
-        echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
+        echo "${prefix} -t ${container} ."
+        ${prefix} -t ${container} .
+        echo ::set-output name=uri::${container}
         echo ::set-output name=dockerfile_dir::${basedir}
 
     - name: Deploy Container
@@ -108,8 +108,8 @@ jobs:
         container: ${{ matrix.result.container_name }}
       run: |
         docker images
-        printf "docker push ghcr.io/rse-radiuss/${container}\n"
-        docker push ghcr.io/rse-radiuss/${container}
+        printf "docker push ${container}\n"
+        docker push ${container}
 
     - name: Run Librarian
       id: runner
