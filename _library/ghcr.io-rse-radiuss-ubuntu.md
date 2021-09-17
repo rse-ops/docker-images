@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/ubuntu
-updated_at: 2021-09-17 00:47:50.669479
+updated_at: 2021-09-17 02:23:10.874556
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/ubuntu
