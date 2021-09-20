@@ -2,7 +2,7 @@ FROM ubuntu:16.04@sha256:454054f5bbd571b088db25b662099c6c7b3f0cb78536a2077d54adc
 
 # docker build -t ghcr.io/rse-radiuss/ubuntu:<version> .
 
-ARG uptodate_github_commit_spack__spack__develop=be8e52fbbec8106150680fc628dc72e69e5a20be
+ARG uptodate_github_commit_spack__spack__develop=aa7e354a3a45f448489926282b980899bcea0ffd
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
