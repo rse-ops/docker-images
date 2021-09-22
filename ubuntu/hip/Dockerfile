@@ -6,4 +6,4 @@ ARG hip_version
 ENV hip_version=$hip_version
 
 RUN spack install hip@${hip_version}
-RUN spack view -d no symlink -i /opt/view hip@${hip_version}
+RUN spack view --dependencies no symlink --ignore-conflicts /opt/view hip@${hip_version}
