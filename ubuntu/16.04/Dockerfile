@@ -21,6 +21,7 @@ RUN apt-get -qq update && \
       ninja-build \
       python-dev \ 
       python3-pip \
+      python3-setuptools \
       sudo \
       valgrind \
       vim \
