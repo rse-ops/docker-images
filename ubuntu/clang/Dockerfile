@@ -6,4 +6,4 @@ ARG llvm_version
 ENV llvm_version=$llvm_version
 
 RUN spack install llvm@${llvm_version}
-RUN spack view symlink /opt/view llvm@${llvm_version}
+RUN spack view -d no symlink -i /opt/view llvm@${llvm_version}
