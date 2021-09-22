@@ -21,6 +21,7 @@ RUN apt-get -qq update && \
       ninja-build \
       python-dev \ 
       python3-pip \
+      python3-setuptools \
       sudo \
       valgrind \
       vim \
@@ -34,7 +35,8 @@ RUN git clone https://github.com/spack/spack && \
 ENV PATH=/opt/spack/bin:$PATH
 
 # Use the autamus build cache for maybe faster install?
-RUN python3 -m pip install botocore boto3 && \
+RUN python3 -m pip --upgrade pip && \
+    python3 -m pip install botocore boto3 && \
     spack mirror add autamus s3://autamus-cache && \
     curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
     spack gpg trust key.pub
