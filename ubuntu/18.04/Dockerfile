@@ -42,5 +42,5 @@ RUN python3 -m pip install botocore boto3 && \
 RUN spack external find && \
     spack install cmake@3.20.4
 
-RUN spack view symlink /opt/view cmake@3.20.4
+RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4
 ENV PATH=/opt/view/bin:$PATH

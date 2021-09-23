@@ -45,5 +45,5 @@ RUN spack external find && \
     # Install a new CMake (used to be 3.10.1)
     spack install cmake@3.20.4
 
-RUN spack view symlink /opt/view cmake@3.20.4
+RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4
 ENV PATH=/opt/view/bin:$PATH
