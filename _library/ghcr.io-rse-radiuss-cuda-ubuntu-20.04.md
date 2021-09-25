@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/cuda-ubuntu-20.04
-updated_at: 2021-09-25 03:31:33.111487
+updated_at: 2021-09-25 03:31:34.965461
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/cuda-ubuntu-20.04
