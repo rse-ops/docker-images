@@ -5,5 +5,6 @@ FROM ghcr.io/rse-radiuss/ubuntu:$ubuntu_version
 ARG gcc_version
 ENV gcc_version=$gcc_version
 
-RUN spack install gcc@${gcc_version}
-RUN spack view --dependencies no symlink --ignore-conflicts /opt/view gcc@${gcc_version}
+RUN spack install gcc@${gcc_version} && \
+  spack compiler find && \
+  spack view --dependencies no symlink --ignore-conflicts /opt/view gcc@${gcc_version}
