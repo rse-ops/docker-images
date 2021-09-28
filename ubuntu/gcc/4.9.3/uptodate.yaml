@@ -1,0 +1,14 @@
+dockerbuild:
+  matrix:
+    gcc_version: ["4.9.3"]
+    ubuntu_version: ["18.04"]
+
+  build_args:
+    gcc_version:
+      key: gcc
+       
+    # Look for ubuntu versions for our base builds
+    ubuntu_version:
+      key: ubuntu
+      name: ghcr.io/rse-radiuss/ubuntu
+      type: container
