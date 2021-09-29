@@ -37,7 +37,7 @@ jobs:
          fetch-depth: 0
 
     - name: Generate Build Matrix
-      uses: vsoch/uptodate@add/matrix-include-option
+      uses: vsoch/uptodate@main
       id: dockerbuild
       with: 
         root: .
