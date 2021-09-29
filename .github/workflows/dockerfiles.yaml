@@ -133,6 +133,14 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
+    - name: Setup Docker cache
+      uses: actions/cache@v2
+      with:
+        path: /docker.cache
+        key: ${{ runner.os }}-docker-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-docker
+
     - name: Make Space For Build
       run: |
           sudo rm -rf /usr/share/dotnet
@@ -152,11 +160,16 @@ jobs:
         printf "Container is ${container}\n"
         cat ${{ matrix.result.name }}
         cd $basedir
-        docker build -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
+        docker buildx --cache-from=type=local,/docker.cache --cache-to=type=local,mode=max,/docker.cache.tmp -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
         echo ::set-output name=container_uri::ghcr.io/rse-radiuss/${container}:${tag}
         echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
         echo ::set-output name=tag::${tag}
         echo ::set-output name=dockerfile_dir::${basedir}
+
+    - name: Update Docker cache
+      run: |
+        rm -rf /docker.cache
+        mv /docker.cache.tmp /docker.cache
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
