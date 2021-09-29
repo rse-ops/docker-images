@@ -137,7 +137,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /docker.cache
-        key: ${{ runner.os }}-docker-${{ github.sha }}
+        key: ${{ runner.os }}-docker-${{ matrix.result.name }}
         restore-keys: |
           ${{ runner.os }}-docker
 
