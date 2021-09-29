@@ -40,7 +40,12 @@ RUN python3 -m pip install botocore boto3 && \
 
 # Find packages already installed on system, e.g. autoconf and install cmake
 RUN spack external find && \
-    spack install cmake@3.20.4
+    spack install cmake@3.20.4 && \
+    spack external find cmake && \
+    spack config add 'packages:cmake:buildable:False'
 
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4
 ENV PATH=/opt/view/bin:$PATH
+
+RUN spack external find cmake && \
+    spack config add 'packages:cmake:buildable:False'
