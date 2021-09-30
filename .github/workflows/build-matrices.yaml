@@ -80,11 +80,16 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-
+      
     - name: Make Space For Build
       run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
+
+    - name: Pull Docker Layers
+      env:
+        container: ${{ matrix.result.container_name }}
+      run: docker pull ${container} || exit 0
 
     - name: Build ${{ matrix.result.container_name }}
       id: builder
