@@ -160,7 +160,7 @@ jobs:
         printf "Container is ${container}\n"
         cat ${{ matrix.result.name }}
         cd $basedir
-        docker buildx --cache-from=type=local,/docker.cache --cache-to=type=local,mode=max,/docker.cache.tmp -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
+        docker build --cache-from=type=local,/docker.cache --cache-to=type=local,mode=max,/docker.cache.tmp -f ${dockerfile} -t ghcr.io/rse-radiuss/${container}:${tag} .
         echo ::set-output name=container_uri::ghcr.io/rse-radiuss/${container}:${tag}
         echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
         echo ::set-output name=tag::${tag}
