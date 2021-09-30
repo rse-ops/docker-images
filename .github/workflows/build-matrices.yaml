@@ -80,19 +80,16 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-
-    - name: Setup Docker cache
-      uses: actions/cache@v2
-      with:
-        path: /docker.cache
-        key: ${{ runner.os }}-docker-${{ matrix.result.name }}
-        restore-keys: |
-          ${{ runner.os }}-docker
-
+      
     - name: Make Space For Build
       run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
+
+    - name: Pull Docker Layers
+      env:
+        container: ${{ matrix.result.container_name }}
+      run: docker pull ${container} || exit 0
 
     - name: Build ${{ matrix.result.container_name }}
       id: builder
@@ -106,14 +103,9 @@ jobs:
         # Get relative path to PWD and generate dashed name from it
         cd $basedir
         echo "${prefix} -t ${container} ."
-        ${prefix} --cache-from=type=local,/docker.cache --cache-to=type=local,mode=max,/docker.cache.tmp -t ${container} .
+        ${prefix} -t ${container} .
         echo ::set-output name=uri::${container}
         echo ::set-output name=dockerfile_dir::${basedir}
-
-    - name: Update Docker cache
-      run: |
-        rm -rf /docker.cache
-        mv /docker.cache.tmp /docker.cache
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
