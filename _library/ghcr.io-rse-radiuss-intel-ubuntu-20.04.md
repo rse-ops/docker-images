@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/intel-ubuntu-20.04
-updated_at: 2021-09-17 00:41:49.165334
+updated_at: 2021-10-01 03:57:41.319160
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/intel-ubuntu-20.04
