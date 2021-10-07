@@ -1,7 +1,5 @@
 dockerbuild:
 
-  # Currently disabled until bug is fixed (build is failing)
-  active: false
   build_args:
     hip_version:
       key: hip
