@@ -56,7 +56,7 @@ jobs:
 
       # This should not trigger a second time, since the token is not a PAT
       - name: Update Recipes
-        if: (github.event_name == 'schedule')
+        if: (github.event_name == 'schedule' || github.event_name == 'push')
         env:
           result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
