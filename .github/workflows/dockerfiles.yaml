@@ -1,6 +1,6 @@
 name: Dockerfile Updates
 
-# This job updates base images (e.g., ubuntu)
+# This job updates Dockerfiles for base images (e.g., ubuntu)
 # Two hours later, the jobs that update matrix builds (that use these base images)
 # are run.
 
@@ -56,7 +56,7 @@ jobs:
 
       # This should not trigger a second time, since the token is not a PAT
       - name: Update Recipes
-        if: (github.event_name == 'push')
+        if: (github.event_name == 'schedule' || github.event_name == 'push')
         env:
           result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -121,6 +121,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
+      with:
+        ref: "main"
 
     - name: GHCR Login
       if: (github.event_name != 'pull_request')
