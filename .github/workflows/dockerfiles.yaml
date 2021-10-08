@@ -1,6 +1,6 @@
 name: Dockerfile Updates
 
-# This job updates base images (e.g., ubuntu)
+# This job updates Dockerfiles for base images (e.g., ubuntu)
 # Two hours later, the jobs that update matrix builds (that use these base images)
 # are run.
 
@@ -121,6 +121,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
+      with:
+        ref: "main"
 
     - name: GHCR Login
       if: (github.event_name != 'pull_request')
