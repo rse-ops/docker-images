@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/clang-ubuntu-20.04
-updated_at: 2021-10-09 00:12:37.473402
+updated_at: 2021-10-09 06:56:00.040841
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/clang-ubuntu-20.04
