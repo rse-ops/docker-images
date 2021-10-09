@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/clang-ubuntu-20.04
-updated_at: 2021-10-09 06:57:55.384859
+updated_at: 2021-10-09 06:59:53.860777
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/clang-ubuntu-20.04
@@ -15,5 +15,8 @@ versions:
  - tag: llvm-11.0.0
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/clang-ubuntu-20.04:llvm-11.0.0
+ - tag: llvm-13.0.0
+   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/clang-ubuntu-20.04:llvm-13.0.0
 
 ---
