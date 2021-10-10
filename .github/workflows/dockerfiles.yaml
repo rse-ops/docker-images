@@ -119,10 +119,16 @@ jobs:
 
     name: "Build ${{ matrix.result.name }}"
     steps:
+
     - name: Checkout Repository
+      if: (github.event_name == 'schedule' || github.event_name == 'push')
       uses: actions/checkout@v2
       with:
         ref: "main"
+
+    - name: Checkout Repository
+      if: (github.event_name == 'pull_request')
+      uses: actions/checkout@v2
 
     - name: GHCR Login
       if: (github.event_name != 'pull_request')
