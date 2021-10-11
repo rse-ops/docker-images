@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/gcc-ubuntu-20.04
-updated_at: 2021-10-10 07:29:31.272781
+updated_at: 2021-10-11 04:23:11.233621
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/gcc-ubuntu-20.04
 versions:
- - tag: gcc-7.3.0
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/gcc/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/gcc-ubuntu-20.04:gcc-7.3.0
  - tag: gcc-10.3.0
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/gcc-ubuntu-20.04:gcc-10.3.0
@@ -21,5 +18,8 @@ versions:
  - tag: gcc-9.4.0
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/gcc-ubuntu-20.04:gcc-9.4.0
+ - tag: gcc-7.3.0
+   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/gcc/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/gcc-ubuntu-20.04:gcc-7.3.0
 
 ---
