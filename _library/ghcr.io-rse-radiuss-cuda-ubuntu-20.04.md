@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-radiuss/cuda-ubuntu-20.04
-updated_at: 2021-10-15 03:32:15.822189
+updated_at: 2021-10-15 03:36:43.068232
 
 
 container_url: https://github.com/orgs/rse-radiuss/packages/container/package/cuda-ubuntu-20.04
 versions:
- - tag: cuda-11.0.3
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/cuda/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/cuda-ubuntu-20.04:cuda-11.0.3
  - tag: cuda-11.1.1
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/cuda-ubuntu-20.04:cuda-11.1.1
@@ -24,5 +21,8 @@ versions:
  - tag: cuda-11.4.0
    dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/cuda-ubuntu-20.04:cuda-11.4.0
+ - tag: cuda-11.0.3
+   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/cuda/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-radiuss/cuda-ubuntu-20.04:cuda-11.0.3
 
 ---
