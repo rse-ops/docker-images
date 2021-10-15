@@ -1,8 +1,8 @@
 ### GENERAL SETTINGS ###
 
 # Site settings
-title: RADIUSS Container Library
-description: "Library of Docker container bases provided by RADIUSS"
+title: RSE-ops Container Library
+description: "Library of Docker container bases provided by RSE-ops community"
 baseurl: "/docker-images" #important: start with /
 url: ""
 
@@ -10,7 +10,7 @@ url: ""
 markdown: kramdown
 permalink: /:categories/:title
 excerpt_separator: <!--more-->
-github_url: https://rse-radiuss.github.io/
+github_url: https://rse-ops.github.io/
 
 colors:  #in hex code if not noted else
   primary: "#31363C"
@@ -36,13 +36,13 @@ defaults:
       layout: "page"
 
 # Social networks usernames. Many more available: google-plus, flickr, linkedin, etc). Shown in footer.
-github: https://github.com/rse-radiuss
-repo: https://github.com/rse-radiuss/docker-images
-docs: https://rse-radiuss.github.io/docs
+github: https://github.com/rse-ops
+repo: https://github.com/rse-ops/docker-images
+docs: https://rse-ops.github.io/docs
 maintainer: "@vsoch"
 maintainer_url: https://github.com/vsoch
 
-about: "RADIUSS is an effort to provide resources and best practices for open source."
+about: "RSE-ops is a community effort to provide resources and best practices for open source RSEng projects."
 
 
 exclude:

@@ -1266,19 +1266,19 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   background-size: 250% 250%;
 }
 
-.fresh-table.toolbar-color-radiuss .fixed-table-toolbar {
+.fresh-table.toolbar-color-rseops .fixed-table-toolbar {
   background: #31363C;
-  background: -moz-radial-gradient(center, ellipse cover, #d53d1f 0%, #d53d1f 100%);
+  background: -moz-radial-gradient(center, ellipse cover, #741755ff 0%, #741755ff 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #d53d1f), color-stop(100%, #d53d1f));
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #741755ff), color-stop(100%, #741755ff));
   /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #d53d1f 0%, #d53d1f 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, #741755ff 0%, #741755ff 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #d53d1f 0%, #d53d1f 100%);
+  background: -o-radial-gradient(center, ellipse cover, #741755ff 0%, #741755ff 100%);
   /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #d53d1f 0%, #d53d1f 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #741755ff 0%, #741755ff 100%);
   /* IE10+ */
-  background: radial-gradient(ellipse at center, #d53d1f 0%, #d53d1f 100%);
+  background: radial-gradient(ellipse at center, #741755ff 0%, #741755ff 100%);
   /* W3C */
   background-size: 250% 250%;
 }
