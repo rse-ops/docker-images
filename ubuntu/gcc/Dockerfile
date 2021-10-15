@@ -1,5 +1,5 @@
 ARG ubuntu_version
-FROM ghcr.io/rse-radiuss/ubuntu:$ubuntu_version
+FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 
 # Install gcc with spack
 ARG gcc_version

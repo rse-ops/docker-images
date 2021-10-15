@@ -160,11 +160,11 @@ jobs:
         printf "Container is ${container}\n"
         cat ${{ matrix.result.name }}
         cd $basedir
-        container_name=ghcr.io/rse-radiuss/${container}:${tag}
+        container_name=ghcr.io/rse-ops/${container}:${tag}
         docker pull ${container_name} || echo "Container $container_name does not exist yet"
         docker build -f ${dockerfile} -t ${container_name} .
         echo ::set-output name=container_uri::${container_name}
-        echo ::set-output name=uri::ghcr.io/rse-radiuss/${container}
+        echo ::set-output name=uri::ghcr.io/rse-ops/${container}
         echo ::set-output name=tag::${tag}
         echo ::set-output name=dockerfile_dir::${basedir}
 
@@ -180,7 +180,7 @@ jobs:
     - name: Run Librarian
       id: runner
       if: (github.event_name != 'pull_request')
-      uses: rse-radiuss/librarian/docker-images@main
+      uses: rse-ops/librarian/docker-images@main
       with:
           container: ${{ steps.builder.outputs.uri }} 
           dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}

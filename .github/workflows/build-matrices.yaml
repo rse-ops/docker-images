@@ -42,7 +42,7 @@ jobs:
       with: 
         root: .
         parser: dockerbuild
-        flags: "--registry ghcr.io/rse-radiuss"
+        flags: "--registry ghcr.io/rse-ops"
 
     - name: View and Check Build Matrix Result
       env:
@@ -119,7 +119,7 @@ jobs:
     - name: Run Librarian
       id: runner
       if: (github.event_name != 'pull_request')
-      uses: rse-radiuss/librarian/docker-images@main
+      uses: rse-ops/librarian/docker-images@main
       with:
           container: ${{ steps.builder.outputs.uri }} 
           dockerfile: ${{ steps.builder.outputs.dockerfile_dir }}
