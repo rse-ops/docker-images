@@ -1,22 +1,22 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang-ubuntu-20.04
-updated_at: 2021-10-15 22:53:01.855807
+updated_at: 2021-10-16 06:58:10.046090
 
 
-container_url: https://github.com/orgs/rse-radiuss/packages/container/package/clang-ubuntu-20.04
+container_url: https://github.com/orgs/rse-ops/packages/container/package/clang-ubuntu-20.04
 versions:
- - tag: llvm-11.0.0
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-20.04:llvm-11.0.0
  - tag: llvm-13.0.0
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-20.04:llvm-13.0.0
  - tag: llvm-10.0.0
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-20.04:llvm-10.0.0
  - tag: llvm-12.0.0
-   dockerfile: https://github.com/rse-radiuss/docker-images/blob/main/ubuntu/clang/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-20.04:llvm-12.0.0
+ - tag: llvm-11.0.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-20.04:llvm-11.0.0
 
 ---
