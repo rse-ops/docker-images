@@ -54,6 +54,7 @@ RUN apt-get update && apt-get install -y software-properties-common && \
 
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find && \
+    spack config add 'packages:all:target:[x86_64]' && \
     # Install a new CMake (used to be 3.10.1)
     spack install cmake@3.20.4
 
