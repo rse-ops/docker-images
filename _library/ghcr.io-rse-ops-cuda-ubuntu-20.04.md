@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/cuda-ubuntu-20.04
-updated_at: 2021-10-19 03:38:03.942590
+updated_at: 2021-10-20 03:29:14.682990
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/cuda-ubuntu-20.04
