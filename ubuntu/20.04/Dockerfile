@@ -47,6 +47,7 @@ RUN python3 -m pip install botocore boto3 && \
 
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find && \
+    spack config add 'packages:all:target:[x86_64]' && \
     # Install a new CMake
     spack install cmake@3.20.4
 
