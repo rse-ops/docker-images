@@ -2,7 +2,7 @@ FROM ubuntu:16.04@sha256:0f71fa8d4d2d4292c3c617fda2b36f6dabe5c8b6e34c3dc5b0d17d4
 
 # docker build -t ghcr.io/rse-ops/ubuntu:<version> .
 
-ARG uptodate_github_commit_spack__spack__develop=1b71ceb384e825755232b9904efb9e089363cbfc
+ARG uptodate_github_commit_spack__spack__develop=8ff81d43623a5065296d3df1715278488dcc4fcb
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
