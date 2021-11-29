@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/cuda-ubuntu-22.04
-updated_at: 2021-11-29 03:33:40.218877
+updated_at: 2021-11-29 03:33:42.164827
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/cuda-ubuntu-22.04
