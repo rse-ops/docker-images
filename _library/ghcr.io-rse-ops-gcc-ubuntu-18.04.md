@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-18.04
-updated_at: 2021-12-15 04:49:59.016392
+updated_at: 2021-12-15 04:50:00.162855
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-18.04
