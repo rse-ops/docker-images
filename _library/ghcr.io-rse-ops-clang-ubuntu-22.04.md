@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang-ubuntu-22.04
-updated_at: 2021-12-25 07:40:48.801541
+updated_at: 2021-12-26 07:21:11.097043
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/clang-ubuntu-22.04
 versions:
- - tag: llvm-10.0.0
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-22.04:llvm-10.0.0
  - tag: llvm-11.0.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-22.04:llvm-11.0.0
@@ -18,5 +15,8 @@ versions:
  - tag: llvm-12.0.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-22.04:llvm-12.0.0
+ - tag: llvm-10.0.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang-ubuntu-22.04:llvm-10.0.0
 
 ---
