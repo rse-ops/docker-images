@@ -1,6 +1,6 @@
-FROM ubuntu:20.04@sha256:626ffe58f6e7566e00254b638eb7e0f3b11d4da9675088f4781a50ae288f3322
+FROM ubuntu:22.04
 
-LABEL maintainer="Chris White <white238@llnl.gov>,@vsoch"
+LABEL maintainer="@vsoch"
 
 ARG uptodate_github_commit_spack__spack__develop=fc9bfe5317c763459d802222684b0909bb348614
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
@@ -20,7 +20,7 @@ RUN apt-get -qq update && \
       libssl-dev \
       ninja-build \
       pkg-config \
-      python-dev \ 
+      python3 \
       python3-pip \
       sudo \
       valgrind \
