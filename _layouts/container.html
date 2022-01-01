@@ -19,7 +19,7 @@
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="https://rse-ops.github.io/docker-images/" rel="tooltip" data-placement="bottom" target="_blank">
-          <span>RSE-ops•</span> Container Bases
+          <span>RSE-ops • </span> Container Bases
         </a>
         <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-bar bar1"></span>
@@ -114,27 +114,27 @@
                   <div class="tab-content tab-space">
                     <div class="tab-pane active" id="link4">
                       <h3>Basic Usage</h3>
-                      <p><pre><code class="highlight">Download        : docker pull ghcr.io/rse-ops/{{ page.name }}{% if page.size %}
+                      <p><pre><code class="highlight">Download         docker pull {{ page.name }}{% if page.size %}
 Compressed Size : {{ page.size }}MB{% endif %}{% if page.raw_size %}
 Raw Size : {{ page.raw_size }}MB{% endif %}
 </code></pre></p>
                        <br>
                        <h3>Pull (download)</h3>
                        <p>To download the latest version of {{ page.name }} run</p>
-                       <pre><code class="highlight">docker pull ghcr.io/rse-ops/abi-dumper:latest</code></pre>
-                       <p>or to download a specific version of abi-dumper run:</p>
-                       <pre><code class="highlight">docker pull ghcr.io/rse-ops/{{ page.name }}:{{ page.versions[0] }}</code></pre>
+                       <pre><code class="highlight">docker pull {{ page.name }}:latest</code></pre>
+                       <p>or to download a specific version of {{ page.name }} run:</p>
+                       <pre><code class="highlight">docker pull {{ page.name }}:{{ page.versions[0].tag }}</code></pre>
                        <br>
                        <h3>Run</h3>
                        <p>To run the container as an application run</p>
-                       <pre><code class="highlight">docker run --rm ghcr.io/rse-ops/{{ page.name }}</code></pre>
+                       <pre><code class="highlight">docker run --rm {{ page.name }}</code></pre>
 
                     </div>
                     <div class="tab-pane" id="link5">
                       <p>
                        <h3>Usage in FROM</h3>
                        <p>You can use this container base as the FROM in your Dockerfile</p>
-                       <pre><code class="highlight">FROM ghcr.io/rse-ops/{{ page.name }}
+                       <pre><code class="highlight">FROM {{ page.name }}
 RUN ...
                        </code></pre>
                       </p>
@@ -143,7 +143,7 @@ RUN ...
                     <div class="tab-pane" id="link6">
                       <p>
                        <h3>Versions</h3>
-                       <p>The following versions of ghcr.io/rse-ops/{{ page.name }} are available.</p>
+                       <p>The following versions of {{ page.name }} are available.</p>
                         <div class="table-responsive">
                         <table class="table tablesorter " id="plain-table">
                         <thead class=" text-primary">
