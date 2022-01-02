@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/cuda-ubuntu-20.04
-updated_at: 2022-01-01 21:55:48.788837
+updated_at: 2022-01-02 02:58:52.913877
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/cuda-ubuntu-20.04
 versions:
- - tag: cuda-10.1.243
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda-ubuntu-20.04:cuda-10.1.243
  - tag: cuda-11.0.3
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda-ubuntu-20.04:cuda-11.0.3
@@ -24,5 +21,8 @@ versions:
  - tag: cuda-11.4.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda-ubuntu-20.04:cuda-11.4.0
+ - tag: cuda-10.1.243
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda-ubuntu-20.04:cuda-10.1.243
 
 ---
