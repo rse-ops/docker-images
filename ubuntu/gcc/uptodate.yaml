@@ -2,8 +2,8 @@ dockerbuild:
 
   # Specific combinations of build args to exclude (optional)
   exclude:
-    gcc_version: ["4.9.3", "4.9.3"] #, "7.3.0", "8.1.0"]
-    ubuntu_version: ["20.04", "22.04"] # , "22.04", "22.04"]
+    gcc_version: ["4.9.3", "4.9.3", "7.3.0", "8.1.0"]
+    ubuntu_version: ["20.04", "22.04" , "22.04", "22.04"]
 
   build_args:
     gcc_version:
