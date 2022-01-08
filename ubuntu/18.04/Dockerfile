@@ -1,8 +1,8 @@
-FROM ubuntu:18.04@sha256:f257cd935b945cd086899c59e2247cb392bcd067152bfaa8e193669ce347f35e
+FROM ubuntu:18.04@sha256:37b7471c1945a2a12e5a57488ee4e3e216a8369d0b9ee1ec2e41db9c2c1e3d22
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=94bd667ba6436f2c2bcb46d17b20e790547418b0
+ARG uptodate_github_commit_spack__spack__develop=d125bdfaa0ec9b40bbbcae4c43c7c216f34fe38a
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
