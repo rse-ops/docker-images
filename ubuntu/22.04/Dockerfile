@@ -2,7 +2,7 @@ FROM ubuntu:22.04@sha256:0ad36748089181d832164977bdeb56d08672e352173127d8bfcd9aa
 
 LABEL maintainer="@vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=d125bdfaa0ec9b40bbbcae4c43c7c216f34fe38a
+ARG uptodate_github_commit_spack__spack__develop=0277067e5f716d4821da2238bc7c99ad486626c6
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
