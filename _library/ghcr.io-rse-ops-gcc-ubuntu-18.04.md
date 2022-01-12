@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-18.04
-updated_at: 2022-01-12 04:57:42.434780
+updated_at: 2022-01-12 04:59:33.002447
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-18.04
 versions:
- - tag: gcc-7.3.0
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-18.04:gcc-7.3.0
  - tag: gcc-8.1.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-18.04:gcc-8.1.0
@@ -24,5 +21,8 @@ versions:
  - tag: gcc-9.4.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-18.04:gcc-9.4.0
+ - tag: gcc-7.3.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-18.04:gcc-7.3.0
 
 ---
