@@ -2,8 +2,8 @@ dockerbuild:
   build_args:
     intel_version:
       key: intel
-      versions:
-        - "2021.2.0"
+      type: spack
+      startat: "2021.2.0"
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
