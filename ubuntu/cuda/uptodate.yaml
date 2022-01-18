@@ -14,3 +14,12 @@ dockerbuild:
        - "22.04"
        - "22.04"
        - "22.04"
+       
+  build_args:
+    cuda_version:
+      key: cuda
+      name: cuda
+
+    ubuntu_version:
+      key: ubuntu
+      name: ubuntu

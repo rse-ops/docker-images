@@ -42,7 +42,7 @@ jobs:
       with: 
         root: .
         parser: dockerbuild
-        flags: "--registry ghcr.io/rse-ops"
+        flags: "--registry ghcr.io/rse-ops --all"
 
     - name: View and Check Build Matrix Result
       env:
