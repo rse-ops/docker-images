@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/intel-ubuntu-20.04
-updated_at: 2022-01-19 17:19:06.911149
+updated_at: 2022-01-19 17:30:14.053367
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/intel-ubuntu-20.04
@@ -9,5 +9,8 @@ versions:
  - tag: intel-2021.2.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-20.04:intel-2021.2.0
+ - tag: intel-2021.3.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-20.04:intel-2021.3.0
 
 ---
