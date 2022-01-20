@@ -1,20 +1,25 @@
 dockerbuild:
-  build_args:
+  matrix:
     cuda_version:
-      key: cuda
-      versions:
        - "10.1.243"
        - "11.0.3"
        - "11.1.1"
        - "11.2.2"
        - "11.3.1"
        - "11.4.0"
+    ubuntu_version:
+       - "18.04"
+       - "22.04"
+       - "22.04"
+       - "22.04"
+       - "22.04"
+       - "22.04"
+       
+  build_args:
+    cuda_version:
+      key: cuda
+      name: cuda
 
-    # Look for ubuntu versions for our base builds
     ubuntu_version:
       key: ubuntu
-      name: ghcr.io/rse-ops/ubuntu
-      type: container
-      startat: "20.04"
-      filter: 
-        - "^[0-9]+[.]04$"
+      name: ubuntu

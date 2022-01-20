@@ -1,15 +1,14 @@
-FROM ubuntu:16.04@sha256:0f71fa8d4d2d4292c3c617fda2b36f6dabe5c8b6e34c3dc5b0d17d4e704bd39c
+FROM ubuntu:22.04@sha256:0ad36748089181d832164977bdeb56d08672e352173127d8bfcd9aa4f7b3bd41
 
-# docker build -t ghcr.io/rse-ops/ubuntu:<version> .
+LABEL maintainer="@vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=ae6e83b1d5ef2e7049fbc01a7f308b4b5bdf4c4b
+ARG uptodate_github_commit_spack__spack__develop=c11ce3bd1fc87cbb3cc8519d13c27892a9f1d66e
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
-LABEL maintainer="David Beckingsale <david@llnl.gov>,@vsoch"
-
 RUN apt-get -qq update && \
+    apt-get -qq install -fy tzdata && \
     apt-get -qq install -y --no-install-recommends \
       build-essential \
       ca-certificates \
@@ -17,15 +16,21 @@ RUN apt-get -qq update && \
       dh-autoreconf \
       git \
       gnupg2 \
+      lcov \
       libssl-dev \
       ninja-build \
-      python-dev \ 
+      pkg-config \
+      python3 \
       python3-pip \
-      python3-setuptools \
       sudo \
       valgrind \
       vim \
-      wget
+      wget \
+      xsltproc
+
+# Install Clingo for Spack
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install clingo
 
 # Install spack
 WORKDIR /opt
@@ -40,22 +45,10 @@ RUN python3 -m pip install botocore boto3 && \
     curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
     spack gpg trust key.pub
 
-# We need to upgrade Python 3 to at least 3.7 because pkgconf has format strings! yuck
-RUN apt-get update && apt-get install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y python3.8 && \
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
-    apt-get install -y python3.8-distutils && \
-    wget https://bootstrap.pypa.io/get-pip.py && \
-    python3 get-pip.py && \
-    rm get-pip.py && \
-    pip3 install botocore boto3
-
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find && \
     spack config add 'packages:all:target:[x86_64]' && \
-    # Install a new CMake (used to be 3.10.1)
+    # Install a new CMake
     spack install cmake@3.20.4
 
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4

@@ -1,4 +1,10 @@
 dockerbuild:
+
+  # Specific combinations of build args to exclude (optional)
+  exclude:
+    llvm_version: ["10.0.0", "11.0.0"]
+    ubuntu_version: ["22.04", "22.04"]
+
   build_args:
     llvm_version:
       key: llvm
