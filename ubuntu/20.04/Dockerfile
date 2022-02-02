@@ -46,7 +46,8 @@ RUN python3 -m pip install botocore boto3 && \
     spack gpg trust key.pub
 
 # Find packages already installed on system, e.g. autoconf
-RUN spack external find && \
+# We cannot do a global find because finding gettext will fail builds
+RUN spack external find gcc@11.0.1 autoconf bzip2 git tar xz perl && \
     spack config add 'packages:all:target:[x86_64]' && \
     # Install a new CMake
     spack install cmake@3.20.4
