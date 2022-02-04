@@ -1,8 +1,8 @@
-FROM ubuntu:20.04@sha256:b5a61709a9a44284d88fb12e5c48db0409cfad5b69d4ff8224077c57302df9cf
+FROM ubuntu:20.04@sha256:669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4dc93f474be
 
 LABEL maintainer="Chris White <white238@llnl.gov>,@vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=c11ce3bd1fc87cbb3cc8519d13c27892a9f1d66e
+ARG uptodate_github_commit_spack__spack__develop=9c686a12c18cda51cd67ef62d4c11b247b1beca5
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
@@ -46,7 +46,8 @@ RUN python3 -m pip install botocore boto3 && \
     spack gpg trust key.pub
 
 # Find packages already installed on system, e.g. autoconf
-RUN spack external find && \
+# We cannot do a global find because finding gettext will fail builds
+RUN spack external find gcc autoconf bzip2 git tar xz perl && \
     spack config add 'packages:all:target:[x86_64]' && \
     # Install a new CMake
     spack install cmake@3.20.4
