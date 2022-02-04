@@ -1,8 +1,8 @@
-FROM ubuntu:18.04@sha256:bfb4cabd667790ead5c95d9fe341937f0c21118fa79bc768d51c5da9d1dbe917
+FROM ubuntu:18.04@sha256:37b7471c1945a2a12e5a57488ee4e3e216a8369d0b9ee1ec2e41db9c2c1e3d22
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=6d0d8d021ad54ac7ebac2535dbde7b6a09db0048
+ARG uptodate_github_commit_spack__spack__develop=c11ce3bd1fc87cbb3cc8519d13c27892a9f1d66e
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
@@ -40,9 +40,8 @@ RUN python3 -m pip install botocore boto3 && \
 
 # Find packages already installed on system, e.g. autoconf and install cmake
 RUN spack external find && \
-    spack install cmake@3.20.4 && \
-    spack external find cmake && \
-    spack config add 'packages:cmake:buildable:False'
+    spack config add 'packages:all:target:[x86_64]' && \
+    spack install cmake@3.20.4
 
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4
 ENV PATH=/opt/view/bin:$PATH
