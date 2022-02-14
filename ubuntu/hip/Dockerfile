@@ -12,4 +12,5 @@ COPY no_cyclades.patch /opt/spack/var/spack/repos/builtin/packages/llvm-amdgpu/n
 # We need this patch https://github.com/trws/spack/blob/2a54f77d7ebdfbbf131d43abd941ba7736a09737/var/spack/repos/builtin/packages/llvm/package.py#L342-L343
 RUN spack install --deprecated hip@${hip_version}
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view hip@${hip_version} && \
+  spack view --dependencies no symlink --ignore-conflicts /opt/view llvm-amdgpu@{hip_version} && \
   spack compiler find
