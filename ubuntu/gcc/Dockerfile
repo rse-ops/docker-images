@@ -7,4 +7,4 @@ ENV gcc_version=$gcc_version
 
 RUN spack install gcc@${gcc_version}
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view gcc@${gcc_version} && \
-  spack compiler
+  spack compiler find
