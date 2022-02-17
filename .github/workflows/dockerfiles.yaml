@@ -18,9 +18,10 @@ on:
     branches:
       - main
 
+
 jobs:
   update:
-    name: Update Dockerfiles
+    name: Test Updated Dockerfiles
     runs-on: ubuntu-latest
     outputs:
       dockerfile_matrix: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
@@ -28,20 +29,48 @@ jobs:
 
     steps:
 
+      # START PULL REQUEST / PUSH checkout and file derivation =======================
       # Using git in the container to diff means we explicitly need to checkout a branch
       # if we use the default of this action we get a detached HEAD state.
       - uses: actions/checkout@v2
-        if: github.event_name == 'pull_request'
+        if: github.event_name != 'schedule'
+        with:
+           fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        if: github.event_name != 'schedule'
+        uses: tj-actions/changed-files@32d6fb28f082f273420574e9de0a30be993bba58       
+        with:
+          separator: " "
+          files_ignore: .github*
+
+      - name: View Changed Files
+        if: github.event_name != 'schedule'
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done            
+
+      - name: List all Dockerfile and save to matrix
+        uses: vsoch/uptodate@main
+        if: github.event_name != 'schedule'
+        id: dockerfile_list_pr
+        with: 
+          root: ${{ steps.changed-files.outputs.all_changed_files }}
+          parser: dockerfilelist
+          flags: "--no-empty-build-args"
+      # END PULL REQUEST / PUSH checkout and file derivation =======================
+
+      # START SCHEDULED checkout and file derivation =======================
+      - uses: actions/checkout@v2
+        if: github.event_name == 'schedule'
         with:
            fetch-depth: 0
            ref: ${{ github.event.pull_request.head.ref }}
 
-      - uses: actions/checkout@v2
-        if: github.event_name != 'pull_request'
-        with:
-           fetch-depth: 0
-
       - name: Add new Dockerfiles for build
+        if: github.event_name == 'schedule'
         uses: vsoch/uptodate@main
         with: 
           root: .
@@ -49,6 +78,7 @@ jobs:
 
       - name: Update existing Dockerfile hashes
         uses: vsoch/uptodate@main
+        if: github.event_name == 'schedule'
         id: dockerfile_check
         with: 
           root: .
@@ -56,56 +86,31 @@ jobs:
 
       # This should not trigger a second time, since the token is not a PAT
       - name: Update Recipes
-        if: (github.event_name == 'schedule' || github.event_name == 'push')
+        if: github.event_name == 'schedule'
         env:
           result: ${{ steps.dockerfile_check.outputs.dockerfile_matrix }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          printf "GitHub Actor: ${GITHUB_ACTOR}\n"
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git fetch || printf "fetch did not work\n"
-          git checkout main || printf "Already on main!\n"
-
-          # Add all results!
-          for row in $(echo "${result}" | jq -r '.[] | @base64'); do
-            _jq() {
-              echo ${row} | base64 --decode | jq -r ${1};}
-            git add $(_jq '.name')
-          done
-          set +e
-          git status | grep modified
-          if [ $? -eq 0 ]; then
-              set -e
-              printf "Changes\n"
-              git commit -a -m "Automated push to update ${{ matrix.result.name }} $(date '+%Y-%m-%d')" || exit 0
-              git push origin main
-          else
-              set -e
-              printf "No changes\n"
-          fi
+          result_name: ${{ matrix.result.name }}
+        run: /bin/bash .github/scripts/commit.sh
 
       - name: List all Dockerfile and save to matrix
         uses: vsoch/uptodate@main
-        id: dockerfile_list
+        if: github.event_name == 'schedule'
+        id: dockerfile_list_scheduled
         with: 
           root: .
           parser: dockerfilelist
           flags: "--no-empty-build-args"
           changes: true # only include changed files
 
+      # END SCHEDULED checkout and file derivation =======================
+
       - name: View Build Matrix Result
+        id: dockerfile_list
         env:
-          result: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix }}
-          is_empty: ${{ steps.dockerfile_list.outputs.dockerfilelist_matrix_empty }}
-        run: |
-          echo ${result}
-          echo ${is_empty}
-          if [[ "${result}" == "[]" ]]; then
-            printf "The matrix is empty, will not trigger next workflow.\n"
-          else
-            printf "The matrix is not empty, and we should continue on to the next workflow.\n"
-          fi
+          result: ${{ steps.dockerfile_list_pr.outputs.dockerfilelist_matrix }}
+          result_scheduled: ${{ steps.dockerfile_list_scheduled.outputs.dockerfilelist_matrix }}
+        run: /bin/bash .github/scripts/combine_results.sh
 
   build:
     needs:
@@ -115,19 +120,12 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
-    if: ${{ needs.update.outputs.empty_matrix == 'false' }}
+    if: ${{ needs.update.outputs.empty_matrix == false }}
 
     name: "Build ${{ matrix.result.name }}"
     steps:
 
     - name: Checkout Repository
-      if: (github.event_name == 'schedule' || github.event_name == 'push')
-      uses: actions/checkout@v2
-      with:
-        ref: "main"
-
-    - name: Checkout Repository
-      if: (github.event_name == 'pull_request')
       uses: actions/checkout@v2
 
     - name: GHCR Login
@@ -148,25 +146,10 @@ jobs:
 
     # This currently has a lot of extra prints for debugging
     - name: Build ${{ matrix.result.name }}
-      id: builder
-      run: |
-        basedir=$(dirname ${{ matrix.result.name }})
-        printf "Base directory is ${basedir}\n"
-        dockerfile=$(basename ${{ matrix.result.name }})
-        printf "Dockerfile basename is ${dockerfile}\n"
-        tag=$(basename ${basedir})
-        printf "Tag is ${tag}\n"
-        container=$(basename $(dirname $basedir))          
-        printf "Container is ${container}\n"
-        cat ${{ matrix.result.name }}
-        cd $basedir
-        container_name=ghcr.io/rse-ops/${container}:${tag}
-        docker pull ${container_name} || echo "Container $container_name does not exist yet"
-        docker build -f ${dockerfile} -t ${container_name} .
-        echo ::set-output name=container_uri::${container_name}
-        echo ::set-output name=uri::ghcr.io/rse-ops/${container}
-        echo ::set-output name=tag::${tag}
-        echo ::set-output name=dockerfile_dir::${basedir}
+      env:
+        result_name: ${{ matrix.result.name }}
+      id: builder   
+      run: /bin/bash .github/scripts/build.sh
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
