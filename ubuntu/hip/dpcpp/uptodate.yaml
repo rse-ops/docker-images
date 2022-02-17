@@ -1,4 +1,6 @@
 dockerbuild:
+
+  container_basename: ubuntu-hip-dpcpp
   build_args:
     dpcpp_version:
       key: dpcpp
@@ -11,6 +13,3 @@ dockerbuild:
       key: hip
       name: ghcr.io/rse-ops/hip-ubuntu-22.04
       type: container
-      startat: "4.2.0"
-      # filter:
-      #   - "^[0-9]+[.]04$"

@@ -1,4 +1,6 @@
 dockerbuild:
+
+  container_basename: ubuntu-cuda-dpcpp
   build_args:
     dpcpp_version:
       key: dpcpp
@@ -11,6 +13,3 @@ dockerbuild:
       key: cuda
       name: ghcr.io/rse-ops/cuda-ubuntu-22.04
       type: container
-      startat: "10.1.243"
-      # filter:
-      #   - "^[0-9]+[.]04$"
