@@ -1,0 +1,16 @@
+dockerbuild:
+  build_args:
+    dpcpp_version:
+      key: dpcpp
+      name: dpcpp
+      type: spack
+      startat: "2021.09"
+
+    # Look for ubuntu versions for our base builds
+    cuda_version:
+      key: cuda
+      name: ghcr.io/rse-ops/cuda-ubuntu-22.04
+      type: container
+      startat: "10.1.243"
+      # filter:
+      #   - "^[0-9]+[.]04$"
