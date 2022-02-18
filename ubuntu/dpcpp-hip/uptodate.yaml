@@ -1,0 +1,16 @@
+dockerbuild:
+  build_args:
+    dpcpp_version:
+      key: dpcpp
+      name: dpcpp
+      type: spack
+      startat: "2021.09"
+
+    # Look for ubuntu versions for our base builds
+    hip_version:
+      key: hip
+      name: ghcr.io/rse-ops/hip-ubuntu-22.04
+      type: container
+      startat: "4.2.0"
+      # filter:
+      #   - "^[0-9]+[.]04$"

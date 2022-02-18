@@ -26,7 +26,11 @@ RUN apt-get -qq update && \
       valgrind \
       vim \
       wget \
-      xsltproc
+      xsltproc \
+      ncurses-bin \
+      libncurses-dev \
+      && rm -rf /var/lib/apt/lists/* \
+      && apt-get clean
 
 # Install Clingo for Spack
 RUN python3 -m pip install --upgrade pip && \
@@ -48,6 +52,7 @@ RUN python3 -m pip install botocore boto3 && \
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find && \
     spack config add 'packages:all:target:[x86_64]' && \
+    spack config add 'concretizer:reuse:true' && \
     # Install a new CMake
     spack install cmake@3.20.4
 
