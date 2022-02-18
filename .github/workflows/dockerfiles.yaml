@@ -67,7 +67,6 @@ jobs:
         if: github.event_name == 'schedule'
         with:
            fetch-depth: 0
-           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Add new Dockerfiles for build
         if: github.event_name == 'schedule'
