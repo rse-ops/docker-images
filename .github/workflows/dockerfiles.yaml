@@ -119,7 +119,7 @@ jobs:
       fail-fast: false
       matrix:
         result: ${{ fromJson(needs.update.outputs.dockerfile_matrix) }}
-    if: ${{ needs.update.outputs.empty_matrix == false }}
+    if: ${{ needs.update.outputs.dockerfile_matrix != '[]' }}
 
     name: "Build ${{ matrix.result.name }}"
     steps:
