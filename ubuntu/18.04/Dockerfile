@@ -25,7 +25,7 @@ RUN apt-get -qq update && \
       vim \
       wget
 
-# Install spack
+# Install spack!!!!
 WORKDIR /opt
 RUN git clone https://github.com/spack/spack && \
     cd spack && \
