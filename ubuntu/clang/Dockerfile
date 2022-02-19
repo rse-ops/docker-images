@@ -4,7 +4,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 # Install llvm with spack
 ARG llvm_version
 ENV llvm_version=$llvm_version
-ENV llvm_spec=llvm@${llvm_version}+llvm_dylib+link_llvm_dylib+split_dwarf~lldb build_type=MinSizeRel
+ENV llvm_spec=llvm@${llvm_version}+llvm_dylib+link_llvm_dylib+split_dwarf~lldb build_type=Release
 ENV CC=/opt/view/bin/clang
 ENV CXX=/opt/view/bin/clang++
 ENV CPP=/opt/view/bin/clang-cpp
