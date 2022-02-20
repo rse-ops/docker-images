@@ -2,7 +2,7 @@ FROM ubuntu:20.04@sha256:669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4d
 
 LABEL maintainer="Chris White <white238@llnl.gov>,@vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=2fa892daa29574cf89524f736589d93ccd4ee99d
+ARG uptodate_github_commit_spack__spack__develop=9e2d78cffc1beaec2c6e4c3a379c17f25a35b31f
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
@@ -56,4 +56,6 @@ RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20
 ENV PATH=/opt/view/bin:$PATH
 
 RUN spack external find cmake && \
-    spack config add 'packages:cmake:buildable:False'
+    spack config add 'packages:cmake:buildable:False' && \
+    echo /opt/view/lib > /etc/ld.so.conf.d/spack_view.conf && \
+    ldconfig
