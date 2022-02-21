@@ -31,6 +31,7 @@ RUN apt-get -qq update && \
       ncurses-bin \
       libncurses-dev \
       libbinutils \
+      binutils-dev \
       hwloc-nox \
       libhwloc-dev \
       && rm -rf /var/lib/apt/lists/* \
