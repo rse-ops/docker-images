@@ -30,7 +30,7 @@ RUN apt-get -qq update && \
       xsltproc \
       ncurses-bin \
       libncurses-dev \
-      libbinutils-dev \
+      libbinutils \
       hwloc-nox \
       libhwloc-dev \
       && rm -rf /var/lib/apt/lists/* \
@@ -42,8 +42,8 @@ RUN python3 -m pip install --upgrade pip && \
 
 # Install spack
 WORKDIR /opt
-RUN git clone https://github.com/spack/spack spack-huge && \
-    pushd spack-huge && \
+RUN git clone https://github.com/spack/spack spack && \
+    cd spack && \
     git reset --hard ${spack_commit}
 
 ENV PATH=/opt/spack/bin:$PATH
@@ -56,7 +56,8 @@ RUN python3 -m pip install botocore boto3 && \
 
 ENV CMAKE=3.20.4
 RUN curl -s -L https://github.com/Kitware/CMake/releases/download/v$CMAKE/cmake-$CMAKE-linux-x86_64.sh > cmake.sh ; \
-    bash cmake.sh --prefix=/usr/local --skip-license
+    bash cmake.sh --prefix=/usr/local --skip-license && \
+    rm cmake.sh
 
 # Find packages already installed on system, e.g. autoconf
 RUN spack external find --all && \
