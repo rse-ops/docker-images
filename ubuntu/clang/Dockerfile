@@ -16,6 +16,8 @@ RUN apt-get -qq update && \
       && rm -rf /var/lib/apt/lists/* \
       && apt-get clean
 
+RUN spack external find python perl binutils
+
 RUN spack -v install --reuse ${llvm_spec}
 # build compiler
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view ${llvm_spec} && \
