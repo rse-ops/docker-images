@@ -16,7 +16,7 @@ RUN apt-get -qq update && \
       && rm -rf /var/lib/apt/lists/* \
       && apt-get clean
 
-RUN spack install --reuse ${llvm_spec}
+RUN spack -v install --reuse ${llvm_spec}
 # build compiler
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view ${llvm_spec} && \
   spack compiler find
