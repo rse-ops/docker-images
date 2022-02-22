@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
 WORKDIR /opt
-COPY ./scripts /opt/scripts
+COPY ../../scripts /opt/scripts
 RUN ./scripts/apt-install-defaults-plus-args
 ENV CMAKE=3.20.4
 RUN ./scripts/install-cmake-binary
