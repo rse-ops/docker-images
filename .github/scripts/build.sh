@@ -14,6 +14,7 @@ cat ${result_name}
 cd $basedir
 container_name=ghcr.io/rse-ops/${container}:${tag}
 docker pull ${container_name} || echo "Container $container_name does not exist yet"
+printf "docker build -f ${dockerfile} -t ${container_name} .\n"
 docker build -f ${dockerfile} -t ${container_name} .
 echo ::set-output name=container_uri::${container_name}
 echo ::set-output name=uri::ghcr.io/rse-ops/${container}
