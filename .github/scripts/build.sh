@@ -4,7 +4,7 @@ set -e
 
 basedir=$(dirname ${result_name})
 printf "Base directory is ${basedir}\n"
-dockerfile=$(basename ${result_name})
+dockerfile=${result_name}
 printf "Dockerfile basename is ${dockerfile}\n"
 tag=$(basename ${basedir})
 printf "Tag is ${tag}\n"
