@@ -9,26 +9,22 @@ ENV CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-${cuda_version}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
-RUN apt-get -qq update && \
-    apt-get -qq install -y --no-install-recommends \
-      wget \
-      python3-dev \
-      python3-pip \
-      build-essential \
-      sudo \
-      git \
-      vim \
-      dh-autoreconf \
-      ninja-build \
-      ca-certificates
+WORKDIR /opt
+COPY ./scripts /opt/scripts
+COPY ./ubuntu/scripts/* /opt/scripts
+RUN ./scripts/apt-install-defaults-plus-args
+ENV CMAKE=3.20.4
+RUN ./scripts/install-cmake-binary
 
 # Install spack
-RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
+RUN ./scripts/set-up-spack
 ENV PATH=/opt/spack/bin:$PATH
+# Tell spack to use this one without arguments
+ENV SPACK_ENV=/opt/env
 
-# Install cmake 3.10
-RUN wget -q --no-check-certificate https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz && \
-    tar -xzf cmake-3.10.1-Linux-x86_64.tar.gz && \
-    cp -fR cmake-3.10.1-Linux-x86_64/* /usr && \
-    rm -rf cmake-3.10.1-Linux-x86_64 && \
-    rm cmake-3.10.1-Linux-x86_64.tar.gz
+# Add appropriate paths pointing to the view
+ENV PATH=/opt/view/bin:$PATH
+ENV MANPATH=/opt/view/share/man:$MANPATH
+ENV PKG_CONFIG_PATH=/opt/view/lib/pkgconfig:/opt/view/lib64/pkgconfig:/opt/view/share/pkgconfig:$PKG_CONFIG_PATH
+ENV CMAKE_PREFIX_PATH=/opt/view
+ENV ACLOCAL_PATH=/opt/view/share/aclocal
