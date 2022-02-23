@@ -5,6 +5,7 @@ LABEL maintainer="David Beckingsale <david@llnl.gov>,vsoch"
 
 ENV cuda_version=$cuda_version
 ENV CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-${cuda_version}
+ENV spack_commit=develop
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
