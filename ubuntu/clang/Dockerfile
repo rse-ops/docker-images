@@ -9,6 +9,16 @@ ENV CC=/opt/view/bin/clang
 ENV CXX=/opt/view/bin/clang++
 ENV CPP=/opt/view/bin/clang-cpp
 
+RUN apt-get -qq update && \
+    apt-get -qq install -y --no-install-recommends \
+      binutils-dev \
+      python3-dev \
+      && rm -rf /var/lib/apt/lists/* \
+      && apt-get clean
+
+RUN spack external find python perl binutils
+
+RUN spack -v install --reuse ${llvm_spec}
 # build compiler
 RUN spack -v install --reuse ${llvm_spec}
 
