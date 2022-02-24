@@ -4,7 +4,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 # Install gcc with spack
 ARG gcc_version
 ENV gcc_version=$gcc_version
-ENV gcc_spec="gcc@${gcc_version}+strip~bootstrap+binutils languages=c,c++,fortran,go,lto"
+ENV gcc_spec="gcc@${gcc_version}~bootstrap+binutils languages=c,c++,fortran,go,lto"
 ENV COMPILER_NAME=gcc
 ENV COMPILER_VERSION=$gcc_version
 ENV CC=/opt/view/bin/gcc
