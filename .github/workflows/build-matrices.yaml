@@ -23,14 +23,6 @@ jobs:
       empty_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix_empty }}
 
     steps:
-    - name: Maximize build space
-      uses: easimon/maximize-build-space@9ea1a0d4af4788c122cc820dbf9652ebb93dec5a
-      with:
-        root-reserve-mb: 512
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
 
       # START PULL REQUEST / PUSH checkout and file derivation =======================
     - uses: actions/checkout@v2
@@ -95,6 +87,15 @@ jobs:
     if: ${{ needs.generate.outputs.dockerbuild_matrix != '[]' }}
     name: "Build ${{ matrix.result.container_name }}"
     steps:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@9ea1a0d4af4788c122cc820dbf9652ebb93dec5a
+      with:
+        root-reserve-mb: 512
+        swap-size-mb: 1024
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+
     - name: Checkout Repository
       uses: actions/checkout@v2
 
