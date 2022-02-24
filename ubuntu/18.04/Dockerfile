@@ -7,46 +7,20 @@ ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
-RUN apt-get -qq update && \
-    apt-get -qq install -y --no-install-recommends \
-      build-essential \
-      ca-certificates \
-      curl \
-      dh-autoreconf \
-      git \
-      gnupg2 \
-      libssl-dev \
-      ninja-build \
-      python-dev \ 
-      python3-pip \
-      python3-setuptools \
-      sudo \
-      valgrind \
-      vim \
-      wget
+# Add appropriate paths pointing to the view
+ENV PATH=/opt/view/bin:/opt/spack/bin:$PATH \
+    MANPATH=/opt/view/share/man:$MANPATH \
+    PKG_CONFIG_PATH=/opt/view/lib/pkgconfig:/opt/view/lib64/pkgconfig:/opt/view/share/pkgconfig:$PKG_CONFIG_PATH \
+    CMAKE_PREFIX_PATH=/opt/view \
+    ACLOCAL_PATH=/opt/view/share/aclocal
 
-# Install spack
 WORKDIR /opt
-RUN git clone https://github.com/spack/spack && \
-    cd spack && \
-    git reset --hard ${spack_commit}
-ENV PATH=/opt/spack/bin:$PATH
+COPY ./scripts /opt/scripts
+# Install spack
+RUN ./scripts/ubuntu/apt-install-defaults-plus-args.sh &&\
+    ./scripts/install-cmake-binary.sh &&\
+    ./scripts/set-up-spack.sh
+# Tell spack to use this one without arguments
+# NOTE: this has to be here, setting it earlier will kill spack
+ENV SPACK_ENV=/opt/env
 
-# Use the autamus build cache for maybe faster install?
-RUN python3 -m pip install botocore boto3 && \
-    spack mirror add autamus s3://autamus-cache && \
-    curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub && \
-    spack gpg trust key.pub
-
-# Find packages already installed on system, e.g. autoconf and install cmake
-RUN spack external find && \
-    spack config add 'packages:all:target:[x86_64]' && \
-    spack install cmake@3.20.4
-
-RUN spack view --dependencies no symlink --ignore-conflicts /opt/view cmake@3.20.4
-ENV PATH=/opt/view/bin:$PATH
-
-RUN spack external find cmake && \
-    spack config add 'packages:cmake:buildable:False' && \
-    echo /opt/view/lib > /etc/ld.so.conf.d/spack_view.conf && \
-    ldconfig

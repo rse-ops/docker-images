@@ -5,30 +5,24 @@ LABEL maintainer="David Beckingsale <david@llnl.gov>,vsoch"
 
 ENV cuda_version=$cuda_version
 ENV CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-${cuda_version}
-
+ENV spack_commit=develop
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
-RUN apt-get -qq update && \
-    apt-get -qq install -y --no-install-recommends \
-      wget \
-      python3-dev \
-      python3-pip \
-      build-essential \
-      sudo \
-      git \
-      vim \
-      dh-autoreconf \
-      ninja-build \
-      ca-certificates
+# Add appropriate paths pointing to the view
+ENV PATH=/opt/view/bin:/opt/spack/bin:$PATH \
+    MANPATH=/opt/view/share/man:$MANPATH \
+    PKG_CONFIG_PATH=/opt/view/lib/pkgconfig:/opt/view/lib64/pkgconfig:/opt/view/share/pkgconfig:$PKG_CONFIG_PATH \
+    CMAKE_PREFIX_PATH=/opt/view \
+    ACLOCAL_PATH=/opt/view/share/aclocal
 
+WORKDIR /opt
+COPY ./scripts /opt/scripts
 # Install spack
-RUN git clone --depth 1 https://github.com/spack/spack /opt/spack
-ENV PATH=/opt/spack/bin:$PATH
+RUN ./scripts/ubuntu/apt-install-defaults-plus-args.sh &&\
+    ./scripts/install-cmake-binary.sh &&\
+    ./scripts/set-up-spack.sh
+# Tell spack to use this one without arguments
+# NOTE: this has to be here, setting it earlier will kill spack
+ENV SPACK_ENV=/opt/env
 
-# Install cmake 3.10
-RUN wget -q --no-check-certificate https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.tar.gz && \
-    tar -xzf cmake-3.10.1-Linux-x86_64.tar.gz && \
-    cp -fR cmake-3.10.1-Linux-x86_64/* /usr && \
-    rm -rf cmake-3.10.1-Linux-x86_64 && \
-    rm cmake-3.10.1-Linux-x86_64.tar.gz
