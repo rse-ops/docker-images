@@ -23,6 +23,14 @@ jobs:
       empty_matrix: ${{ steps.dockerbuild.outputs.dockerbuild_matrix_empty }}
 
     steps:
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@9ea1a0d4af4788c122cc820dbf9652ebb93dec5a
+      with:
+        root-reserve-mb: 512
+        swap-size-mb: 1024
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
 
       # START PULL REQUEST / PUSH checkout and file derivation =======================
     - uses: actions/checkout@v2
@@ -100,17 +108,6 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-      
-    - name: Make Space For Build
-      run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-
-    - name: Pull Docker Layers
-      env:
-        container: ${{ matrix.result.container_name }}
-      run: docker pull ${container} || exit 0
 
     - name: Update to relative path
       id: relative_path
