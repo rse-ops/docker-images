@@ -4,7 +4,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 # Install llvm with spack
 ARG llvm_version
 ENV llvm_version=$llvm_version
-ENV llvm_spec=llvm@${llvm_version}+llvm_dylib+link_llvm_dylib+split_dwarf~lldb build_type=MinSizeRel
+ENV llvm_spec=llvm@${llvm_version}+llvm_dylib+link_llvm_dylib+split_dwarf~lldb build_type=Release
 ENV CC=/opt/view/bin/clang
 ENV CXX=/opt/view/bin/clang++
 ENV CPP=/opt/view/bin/clang-cpp
@@ -18,11 +18,10 @@ RUN apt-get -qq update && \
 
 RUN spack external find python perl binutils
 
-# build compiler
 RUN spack -v install --reuse ${llvm_spec}
-
-# add new compiler to spack
-RUN spack compiler find
+# build compiler
+RUN spack view --dependencies no symlink --ignore-conflicts /opt/view ${llvm_spec} && \
+  spack compiler find
 
 # set default for spack
 RUN spack config add "packages:all:compiler:[clang@${llvm_version}]"
