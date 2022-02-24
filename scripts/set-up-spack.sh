@@ -15,13 +15,6 @@ export PATH=/opt/spack/bin:$PATH
 python3 -m pip install --upgrade pip
 python3 -m pip install clingo
 
-# Use the autamus build cache for maybe faster install?
-# NOTE: disabling on 2022-2-22 to try to work around binutils fetch errors
-#python3 -m pip install botocore boto3
-#spack mirror add autamus s3://autamus-cache
-#curl http://s3.amazonaws.com/autamus-cache/build_cache/_pgp/FFEB24B0A9D81F6D5597F9900B59588C86C41BE7.pub > key.pub
-#spack gpg trust key.pub
-
 # Find packages already installed on system, e.g. autoconf
 # IMPORTANT: ensure that all binaries installed include their development files
 #            failure to do this will get them detected, and kill builds with

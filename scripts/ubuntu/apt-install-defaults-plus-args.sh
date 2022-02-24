@@ -25,8 +25,6 @@ packages=(
   # common build deps
   libbinutils
   binutils-dev
-  ncurses-bin
-  libncurses-dev
   hwloc-nox
   libhwloc-dev
   libssl-dev
