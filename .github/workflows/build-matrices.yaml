@@ -124,7 +124,11 @@ jobs:
         container: ${{ matrix.result.container_name }}
         prefix: ${{ matrix.result.command_prefix }}
         filename: ${{ steps.relative_path.outputs.relative_path }}
-      run: /bin/bash .github/scripts/build_simple.sh
+      run: |
+        /bin/bash .github/scripts/build_simple.sh
+        res=$?
+        df -h # In case of out of space, hopefully show *where*
+        exit $res
 
     - name: Deploy Container
       if: (github.event_name != 'pull_request')
