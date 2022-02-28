@@ -4,7 +4,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 # Install gcc with spack
 ARG gcc_version
 ENV gcc_version=$gcc_version \
-    gcc_spec="gcc@${gcc_version} languages=c,c++,fortran,go,lto" \
+    gcc_spec="gcc@${gcc_version}~bootstrap+strip+binutils|languages=c,c++,fortran,lto|cflags=-Os -pipe|cxxflags=-Os -pipe" \
     COMPILER_NAME=gcc \
     COMPILER_VERSION=$gcc_version \
     CC=/opt/view/bin/gcc \
@@ -14,9 +14,11 @@ ENV gcc_version=$gcc_version \
 
 
 # build compiler and set defaults
+# note the IFS to split the spec, spack can't tolerate a single-string spec with
+# multiple flags components apparently
 RUN spack external find hwloc ncurses \
- && spack spec --reuse "${gcc_spec}" \
- && spack -v install --deprecated --reuse "${gcc_spec}" \
+ && IFS='|' spack spec --reuse ${gcc_spec} \
+ && IFS='|' spack -v install --deprecated --reuse ${gcc_spec} \
  && spack compiler add \
  && spack config add "packages:all:compiler:[${COMPILER_NAME}@${COMPILER_VERSION}]" \
  && update-alternatives --install /usr/bin/cc cc ${CC} 50 \
