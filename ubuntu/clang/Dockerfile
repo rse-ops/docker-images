@@ -5,6 +5,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 ARG llvm_version
 ENV llvm_version=$llvm_version
 ENV llvm_spec="llvm@${llvm_version}+llvm_dylib+link_llvm_dylib~split_dwarf~lldb~polly+compiler-rt build_type=MinSizeRel" \
+    # these are safe here only because spack ignores them
     COMPILER_NAME=clang \
     COMPILER_VERSION=$llvm_version \
     CC=/opt/view/bin/clang \

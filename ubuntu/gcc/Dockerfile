@@ -5,7 +5,7 @@ FROM ghcr.io/rse-ops/ubuntu:$ubuntu_version
 ARG gcc_version
 ARG JOBS=2
 ENV gcc_version=$gcc_version \
-    gcc_spec="gcc@${gcc_version}+bootstrap+strip+binutils languages=c,c++,fortran,lto,go" \
+    gcc_spec="gcc@${gcc_version}+bootstrap+strip+binutils languages=c,c++,fortran,lto" \
     COMPILER_NAME=gcc \
     COMPILER_VERSION=$gcc_version \
     CC=/opt/view/bin/gcc \
