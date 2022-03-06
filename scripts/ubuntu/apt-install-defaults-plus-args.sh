@@ -30,6 +30,8 @@ packages=(
   libhwloc-dev
   libssl-dev
   lbzip2
+  libbz2-dev
+  liblzma-dev
   bzip2
   unzip
 )
