@@ -28,6 +28,8 @@ packages=(
   hwloc-nox
   libhwloc-dev
   libssl-dev
+  lbzip2
+  bzip2
   unzip
 )
 apt-get -qq update
