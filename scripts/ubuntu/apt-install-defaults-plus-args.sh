@@ -15,6 +15,7 @@ packages=(
   dh-autoreconf
   gnupg2
   lcov
+  meson
   ninja-build
   pkg-config
   python3
