@@ -28,11 +28,10 @@ packages=(
   hwloc-nox
   libhwloc-dev
   libssl-dev
+  unzip
 )
 apt-get -qq update
 apt-get -qq install -fy tzdata
 apt-get -qq install -y --no-install-recommends "${packages[@]}" "$@"
 rm -rf /var/lib/apt/lists/*
 apt-get clean
-
-
