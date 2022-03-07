@@ -31,6 +31,7 @@ packages=(
   libssl-dev
   lbzip2
   libbz2-dev
+  libzip-dev
   liblzma-dev
   bzip2
   unzip
