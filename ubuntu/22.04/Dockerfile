@@ -17,10 +17,9 @@ ENV PATH=/opt/view/bin:/opt/spack/bin:$PATH \
 WORKDIR /opt
 COPY ./scripts /opt/scripts
 # Install spack
-RUN ./scripts/ubuntu/apt-install-defaults-plus-args.sh &&\
-    ./scripts/install-cmake-binary.sh &&\
+RUN ./scripts/ubuntu/apt-install-defaults-plus-args.sh && \
+    ./scripts/install-cmake-binary.sh && \
     ./scripts/set-up-spack.sh
 # Tell spack to use this one without arguments
 # NOTE: this has to be here, setting it earlier will kill spack
 ENV SPACK_ENV=/opt/env
-

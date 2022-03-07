@@ -15,6 +15,7 @@ packages=(
   dh-autoreconf
   gnupg2
   lcov
+  meson
   ninja-build
   pkg-config
   python3
@@ -28,11 +29,15 @@ packages=(
   hwloc-nox
   libhwloc-dev
   libssl-dev
+  lbzip2
+  libbz2-dev
+  libzip-dev
+  liblzma-dev
+  bzip2
+  unzip
 )
 apt-get -qq update
 apt-get -qq install -fy tzdata
 apt-get -qq install -y --no-install-recommends "${packages[@]}" "$@"
 rm -rf /var/lib/apt/lists/*
 apt-get clean
-
-
