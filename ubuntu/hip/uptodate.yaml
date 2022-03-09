@@ -1,19 +1,11 @@
 dockerbuild:
 
-  # Specific combinations of build args to exclude (optional)
-  exclude:
-    hip_version: ["4.0.0", "4.1.0"]
-    ubuntu_version: ["22.04", "22.04"]
-
-
   build_args:
     hip_version:
       key: hip
       versions:
-       - "4.0.0"
-       - "4.1.0"
-       - "4.2.0"
        - "4.3.1"
+       - "4.5.2"
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
