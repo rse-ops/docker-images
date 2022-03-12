@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/nvidia-ubuntu
-updated_at: 2022-03-11 03:20:00.306140
+updated_at: 2022-03-12 03:18:32.269347
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/nvidia-ubuntu
