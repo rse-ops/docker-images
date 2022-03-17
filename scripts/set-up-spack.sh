@@ -27,15 +27,14 @@ spack external find python perl binutils git tar xz bzip2
 spack config add 'packages:all:target:[x86_64]'
 # reuse as much as possible, make externals useful
 spack config add 'concretizer:reuse:true'
-# avoid building an external cmake and python
-spack config add 'packages:cmake:buildable:False'
-spack config add 'packages:python:buildable:False'
 # Generate spack environment for packages
 spack env create --dir /opt/env --with-view /opt/view
 
 # ensure clangs and others that don't inject rpaths make working executables
-echo /opt/view/lib > /etc/ld.so.conf.d/spack_view.conf
-echo /opt/view/lib64 > /etc/ld.so.conf.d/spack_view.conf
+cat >/etc/ld.so.conf.d/spack_view.conf <<EOF
+/opt/view/lib
+/opt/view/lib64
+EOF
 ldconfig
 
 popd
