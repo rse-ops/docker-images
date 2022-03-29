@@ -1,4 +1,4 @@
-FROM alpine:3.14@sha256:cf5b2ed6e37873edf0733ad18ca3ccc414a60ba260be611459c245508a19b652
+FROM alpine:3.14@sha256:85c63ff404e9b4daf18f264447161b50ffa70047cc4c03381478cf2c6edfa9da
 
 LABEL maintainer="@vsoch"
 
