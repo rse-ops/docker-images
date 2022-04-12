@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/nvidia-ubuntu
-updated_at: 2022-04-12 03:37:27.686159
+updated_at: 2022-04-12 03:39:20.496259
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/nvidia-ubuntu
 versions:
- - tag: ubuntu-18.04-cuda-11.1
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/nvidia-ubuntu/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/nvidia-ubuntu:ubuntu-18.04-cuda-11.1
  - tag: cuda-10.1-ubuntu-18.04
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/nvidia-ubuntu/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/nvidia-ubuntu:cuda-10.1-ubuntu-18.04
@@ -18,5 +15,8 @@ versions:
  - tag: ubuntu-18.04-cuda-10.1
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/nvidia-ubuntu/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/nvidia-ubuntu:ubuntu-18.04-cuda-10.1
+ - tag: ubuntu-18.04-cuda-11.1
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/nvidia-ubuntu/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/nvidia-ubuntu:ubuntu-18.04-cuda-11.1
 
 ---
