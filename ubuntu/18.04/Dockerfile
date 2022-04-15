@@ -2,7 +2,7 @@ FROM ubuntu:18.04@sha256:982d72c16416b09ffd2f71aa381f761422085eda1379dc66b668653
 
 LABEL maintainer="Josh Essman <essman1@llnl.gov>, @vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=b28b24ccf8d2900b63b6c560e2a55fd2e17d2f66
+ARG uptodate_github_commit_spack__spack__develop=2d3a613128d10fbe40c119055795bbf83e26d19f
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
