@@ -6,6 +6,7 @@ dockerbuild:
       versions:
        - "4.3.1"
        - "4.5.2"
+       - "5.0.2"
 
     # Look for ubuntu versions for our base builds
     ubuntu_version:
