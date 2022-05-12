@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-20.04
-updated_at: 2022-05-12 05:49:47.949263
+updated_at: 2022-05-12 06:01:51.580166
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-20.04
 versions:
- - tag: gcc-9.4.0
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-20.04:gcc-9.4.0
  - tag: gcc-7.3.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-20.04:gcc-7.3.0
@@ -21,5 +18,8 @@ versions:
  - tag: gcc-10.3.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-20.04:gcc-10.3.0
+ - tag: gcc-9.4.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-20.04:gcc-9.4.0
 
 ---
