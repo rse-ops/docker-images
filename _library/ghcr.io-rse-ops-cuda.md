@@ -1,14 +1,11 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/cuda
-updated_at: 2022-05-14 04:47:56.299574
+updated_at: 2022-05-14 04:49:41.354305
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/cuda
 versions:
- - tag: cuda-11.2.2-ubuntu-22.04
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda:cuda-11.2.2-ubuntu-22.04
  - tag: cuda-11.4.0-ubuntu-22.04
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda:cuda-11.4.0-ubuntu-22.04
@@ -42,5 +39,8 @@ versions:
  - tag: cuda-11.1.1-ubuntu-22.04
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda:cuda-11.1.1-ubuntu-22.04
+ - tag: cuda-11.2.2-ubuntu-22.04
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/cuda/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/cuda:cuda-11.2.2-ubuntu-22.04
 
 ---
