@@ -21,6 +21,6 @@ dockerbuild:
       key: ubuntu
       name: ghcr.io/rse-ops/ubuntu
       type: container
-      startat: "18.04"
+      startat: "20.04"
       filter: 
         - "^[0-9]+[.]04$"
