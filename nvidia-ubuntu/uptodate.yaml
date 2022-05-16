@@ -11,4 +11,4 @@ dockerbuild:
     ubuntu_version:
       key: ubuntu
       versions:
-        - "18.04"
+        - "20.04"
