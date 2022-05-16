@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-22.04
-updated_at: 2022-05-16 22:31:25.760899
+updated_at: 2022-05-16 22:39:07.390858
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-22.04
@@ -15,11 +15,11 @@ versions:
  - tag: gcc-11.2.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-22.04:gcc-11.2.0
- - tag: gcc-9.4.0
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
-   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-22.04:gcc-9.4.0
  - tag: gcc-10.3.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-22.04:gcc-10.3.0
+ - tag: gcc-9.4.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/gcc/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/gcc-ubuntu-22.04:gcc-9.4.0
 
 ---
