@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang-ubuntu-20.04
-updated_at: 2022-06-30 06:24:10.379674
+updated_at: 2022-07-01 06:09:14.965988
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/clang-ubuntu-20.04
