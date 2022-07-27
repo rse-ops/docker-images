@@ -1,0 +1,17 @@
+dockerbuild:
+
+  build_args:
+    hip_version:
+      key: hip
+      versions:
+       - "4.3.1"
+       - "4.5.2"
+
+    # Look for ubuntu versions for our base builds
+    ubuntu_version:
+      key: ubuntu
+      name: ghcr.io/rse-ops/ubuntu
+      type: container
+      startat: "20.04"
+      filter: 
+        - "^[0-9]+[.]04$"
