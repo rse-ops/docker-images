@@ -2,7 +2,7 @@ dockerbuild:
 
   build_args:
     llvm_amdgpu_version:
-      key: llvm_amdgpu
+      key: llvm-amdgpu
       versions:
        - "5.0.2"
        - "5.1.3"
