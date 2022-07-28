@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/hip-ubuntu-22.04
-updated_at: 2022-07-28 07:08:07.043672
+updated_at: 2022-07-28 07:39:57.957691
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/hip-ubuntu-22.04
@@ -18,5 +18,8 @@ versions:
  - tag: hip-5.1.3
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/hip/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/hip-ubuntu-22.04:hip-5.1.3
+ - tag: hip-5.0.2
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/hip/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/hip-ubuntu-22.04:hip-5.0.2
 
 ---
