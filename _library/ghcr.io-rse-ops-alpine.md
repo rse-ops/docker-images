@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/alpine
-updated_at: 2022-07-20 03:16:47.925358
+updated_at: 2022-08-10 02:47:05.087775
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/alpine
