@@ -23,3 +23,4 @@ RUN spack external find hwloc ncurses \
  && update-alternatives --install /usr/bin/cpp cpp ${CPP} 50 \
  && update-alternatives --install /usr/bin/c89 c89 ${CC} 50 \
  && update-alternatives --install /usr/bin/c99 c99 ${CC} 50
+ENV LD_LIBRARY_PATH=/opt/view/lib:${LD_LIBRARY_PATH}
