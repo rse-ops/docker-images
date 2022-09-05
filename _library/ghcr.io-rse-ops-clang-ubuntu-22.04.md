@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang-ubuntu-22.04
-updated_at: 2022-09-04 07:21:34.372843
+updated_at: 2022-09-05 06:58:35.520624
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/clang-ubuntu-22.04
