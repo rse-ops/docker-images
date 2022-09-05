@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-22.04
-updated_at: 2022-09-05 06:05:55.435730
+updated_at: 2022-09-05 06:16:01.906606
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-22.04
