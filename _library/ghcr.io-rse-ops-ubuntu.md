@@ -1,22 +1,22 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/ubuntu
-updated_at: 2022-10-01 03:57:05.510738
+updated_at: 2022-10-01 03:57:08.304684
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/ubuntu
 versions:
  - tag: 16.04
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/22.04/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/20.04/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/ubuntu:16.04
  - tag: 18.04
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/22.04/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/20.04/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/ubuntu:18.04
  - tag: 20.04
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/22.04/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/20.04/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/ubuntu:20.04
  - tag: 22.04
-   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/22.04/Dockerfile
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/20.04/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/ubuntu:22.04
 
 ---
