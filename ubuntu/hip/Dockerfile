@@ -2,6 +2,8 @@ ARG hip_version
 ARG ubuntu_version
 FROM ghcr.io/rse-ops/hip-base-ubuntu-$ubuntu_version:llvm-amdgpu-${hip_version}
 
+# comment to trigger build
+
 # Install with spack
 ARG hip_version
 ENV hip_version=$hip_version
