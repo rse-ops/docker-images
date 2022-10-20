@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/hip-ubuntu-20.04
-updated_at: 2022-10-20 01:59:19.219040
+updated_at: 2022-10-20 03:38:48.975906
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/hip-ubuntu-20.04
