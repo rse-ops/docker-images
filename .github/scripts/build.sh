@@ -15,7 +15,8 @@ container_name=ghcr.io/rse-ops/${container}:${tag}
 docker pull ${container_name} || echo "Container $container_name does not exist yet"
 printf "docker build -f ${dockerfile} -t ${container_name} .\n"
 docker build -f ${dockerfile} -t ${container_name} .
-echo ::set-output name=container_uri::${container_name}
-echo ::set-output name=uri::ghcr.io/rse-ops/${container}
-echo ::set-output name=tag::${tag}
-echo ::set-output name=dockerfile_dir::${basedir}
+
+echo "container_uri=${container_name}" >> $GITHUB_OUTPUT
+echo "uri=ghcr.io/rse-ops/${container}" >> $GITHUB_OUTPUT
+echo "tag=${tag}" >> $GITHUB_OUTPUT
+echo "dockerfile_dir=${basedir}" >> $GITHUB_OUTPUT
