@@ -39,7 +39,7 @@ jobs:
       - name: Get changed files
         id: changed-files
         if: github.event_name != 'schedule'
-        uses: tj-actions/changed-files@32d6fb28f082f273420574e9de0a30be993bba58       
+        uses: tj-actions/changed-files@aa52cfcd81f1a00a6bf1241a8cad6adec4d80638 # v33
         with:
           separator: " "
           files_ignore: .github*
