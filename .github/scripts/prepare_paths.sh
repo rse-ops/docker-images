@@ -24,4 +24,5 @@ echo ${parsed}
 if [[ "${parsed}" == "" ]]; then
     parsed="/does/not/exist/pathy"
 fi
-echo "::set-output name=parsed_files::${parsed}"
+
+echo "parsed_files=${parsed}" >> $GITHUB_OUTPUT

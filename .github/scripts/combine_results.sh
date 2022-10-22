@@ -14,13 +14,13 @@ fi
 result=$(python -c "import json; print(json.loads('${result}') + json.loads('${result_scheduled}'))")
 if [[ "${result}" == "[]" ]]; then
   printf "The matrix is empty, will not trigger next workflow.\n"
-  echo "::set-output name=empty_matrix::true"
+  echo "empty_matrix=true" >> $GITHUB_OUTPUT
 else
   printf "The matrix is not empty, and we should continue on to the next workflow.\n"
-  echo "::set-output name=empty_matrix::false"
+  echo "empty_matrix=false" >> $GITHUB_OUTPUT
 fi
 echo ${result}
 
 # set for both workflows that use it
-echo "::set-output name=dockerfilelist_matrix::${result}"
-echo "::set-output name=dockerbuild_matrix::${result}"
+echo "dockerfilelist_matrix=${result}" >> $GITHUB_OUTPUT
+echo "dockerbuild_matrix=${result}" >> $GITHUB_OUTPUT
