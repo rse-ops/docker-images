@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/gcc-ubuntu-20.04
-updated_at: 2022-11-08 04:57:10.356937
+updated_at: 2022-11-08 05:02:44.642666
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/gcc-ubuntu-20.04
