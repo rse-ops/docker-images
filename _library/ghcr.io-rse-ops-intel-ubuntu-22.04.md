@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/intel-ubuntu-22.04
-updated_at: 2022-11-11 04:44:25.082844
+updated_at: 2022-11-11 04:46:39.689548
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/intel-ubuntu-22.04
@@ -27,5 +27,8 @@ versions:
  - tag: intel-2022.2.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-22.04:intel-2022.2.0
+ - tag: intel-2022.2.1
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-22.04:intel-2022.2.1
 
 ---
