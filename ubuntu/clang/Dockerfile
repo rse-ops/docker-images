@@ -18,7 +18,7 @@ RUN spack external find hwloc ncurses \
  && spack add "${llvm_spec}" \
  && spack mirror add develop https://binaries.spack.io/releases/develop \
  && spack buildcache keys --install --trust \
- && spack -v install \
+ && spack install --fail-fast \
  && spack compiler add \
  && spack config add "packages:all:compiler:[${COMPILER_NAME}@${COMPILER_VERSION}]" \
  && update-alternatives --install /usr/bin/cc cc ${CC} 50 \
