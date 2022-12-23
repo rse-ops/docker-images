@@ -24,7 +24,10 @@ RUN apt-get -qq update \
 RUN spack external find hwloc ncurses texinfo gawk \
  && EXTRA_LANG=$(bash -c "[[ ${gcc_version} > 5 ]] && echo ',jit'" || true) \
  && spack spec --reuse ${gcc_spec}$EXTRA_LANG "^binutils@2.38:" \
- && spack -v install --jobs $JOBS --deprecated --reuse ${gcc_spec} \
+ && spack mirror add develop https://binaries.spack.io/releases/develop \
+ && spack buildcache keys --install --trust \
+ && spack add ${gcc_spec} \
+ && spack -v install --jobs $JOBS --deprecated \
  && spack compiler add \
  && spack config add "packages:all:compiler:[${COMPILER_NAME}@${COMPILER_VERSION}]" \
  && update-alternatives --install /usr/bin/cc cc ${CC} 50 \
