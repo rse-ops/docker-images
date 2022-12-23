@@ -11,7 +11,7 @@ RUN spack mirror add develop https://binaries.spack.io/releases/develop && \
     spack buildcache keys --install --trust && \
     spack add hip@${hip_version} && \
     spack add rocprim@${hip_version} && \
-    spack install --deprecated 
+    spack install
 RUN spack view --dependencies no symlink --ignore-conflicts /opt/view hip@${hip_version} && \
   spack view --dependencies no symlink --ignore-conflicts /opt/view llvm-amdgpu@${hip_version} && \
   spack view --dependencies no symlink --ignore-conflicts /opt/view rocprim@${hip_version} && \
