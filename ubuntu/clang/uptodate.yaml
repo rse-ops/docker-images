@@ -18,11 +18,8 @@ dockerbuild:
       # Greater than 10.0.0
       startat: "10.0.0"
 
-    # Look for ubuntu versions for our base builds
+    # Only support those in spack build cache
     ubuntu_version:
       key: ubuntu
-      name: ghcr.io/rse-ops/ubuntu
-      type: container
-      startat: "20.04"
-      filter: 
-        - "^[0-9]+[.]04$"
+      versions:
+        - "20.04"

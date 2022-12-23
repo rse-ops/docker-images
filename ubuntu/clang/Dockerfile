@@ -16,7 +16,9 @@ ENV llvm_spec="llvm@${llvm_version}+llvm_dylib+link_llvm_dylib~split_dwarf~lldb~
 RUN spack external find hwloc ncurses \
  && spack spec --reuse "${llvm_spec}" \
  && spack add "${llvm_spec}" \
- && spack -v install --reuse \
+ && spack mirror add develop https://binaries.spack.io/releases/develop
+ && spack buildcache keys --install --trust
+ && spack -v install \
  && spack compiler add \
  && spack config add "packages:all:compiler:[${COMPILER_NAME}@${COMPILER_VERSION}]" \
  && update-alternatives --install /usr/bin/cc cc ${CC} 50 \
