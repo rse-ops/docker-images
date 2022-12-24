@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang
-updated_at: 2022-12-24 09:03:28.412983
+updated_at: 2022-12-24 10:09:07.722103
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/clang
@@ -27,5 +27,8 @@ versions:
  - tag: llvm-11.0.0-ubuntu-20.04
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang:llvm-11.0.0-ubuntu-20.04
+ - tag: llvm-13.0.0-ubuntu-20.04
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/clang/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/clang:llvm-13.0.0-ubuntu-20.04
 
 ---
