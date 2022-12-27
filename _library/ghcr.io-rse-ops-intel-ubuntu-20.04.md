@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/intel-ubuntu-20.04
-updated_at: 2022-12-27 03:28:46.612081
+updated_at: 2022-12-27 03:28:59.894190
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/intel-ubuntu-20.04
