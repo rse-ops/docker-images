@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/cuda
-updated_at: 2023-01-03 03:34:55.209774
+updated_at: 2023-01-03 03:44:12.353257
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/cuda
