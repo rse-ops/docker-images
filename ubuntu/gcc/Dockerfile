@@ -14,14 +14,14 @@ ENV gcc_version=$gcc_version \
     CPP=/opt/view/bin/cpp
 
 RUN apt-get -qq update \
- && apt-get -qq install -y --no-install-recommends gawk \
+ && apt-get -qq install -y --no-install-recommends gawk texinfo \
  && rm -rf /var/lib/apt/lists/* \
  && apt-get clean
 
 # build compiler and set defaults
 # note the IFS to split the spec, spack can't tolerate a single-string spec with
 # multiple flags components apparently
-RUN spack external find hwloc ncurses gawk \
+RUN spack external find hwloc ncurses gawk texinfo \
  && EXTRA_LANG=$(bash -c "[[ ${gcc_version} > 5 ]] && echo ',jit'" || true) \
  && spack spec --reuse ${gcc_spec}$EXTRA_LANG "^binutils@2.38:" \
  && spack mirror add develop https://binaries.spack.io/releases/develop \
