@@ -1,17 +1,8 @@
 dockerbuild:
-
-  # Specific combinations of build args to exclude (optional)
-  exclude:
-    gcc_version: ["4.9.3", "4.9.3", "7.3.0", "8.1.0"]
-    ubuntu_version: ["20.04", "22.04" , "22.04", "22.04"]
-
   build_args:
     gcc_version:
       key: gcc
       versions:
-       - "4.9.3"
-       - "7.3.0"
-       - "8.1.0"
        - "9.4.0"
        - "10.3.0"
        - "11.2.0"
@@ -19,8 +10,5 @@ dockerbuild:
     # Look for ubuntu versions for our base builds
     ubuntu_version:
       key: ubuntu
-      name: ghcr.io/rse-ops/ubuntu
-      type: container
-      startat: "20.04"
-      filter: 
-        - "^[0-9]+[.]04$"
+      versions:
+        - "20.04"
