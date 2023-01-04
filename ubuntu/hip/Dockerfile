@@ -1,6 +1,6 @@
 ARG hip_version
 ARG ubuntu_version
-FROM ghcr.io/rse-ops/hip-base-ubuntu-$ubuntu_version:llvm-amdgpu-${hip_version}
+FROM ghcr.io/rse-ops/hip-base:llvm-amdgpu-${hip_version}-ubuntu-${ubuntu_version}
 
 # Install with spack
 ARG hip_version
