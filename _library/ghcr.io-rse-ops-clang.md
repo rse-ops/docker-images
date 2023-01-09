@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/clang
-updated_at: 2023-01-09 05:27:55.158090
+updated_at: 2023-01-09 05:31:15.229234
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/clang
