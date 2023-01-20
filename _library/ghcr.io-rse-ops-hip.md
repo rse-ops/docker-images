@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/hip
-updated_at: 2023-01-20 06:40:59.902050
+updated_at: 2023-01-20 07:44:26.775493
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/hip
@@ -15,5 +15,8 @@ versions:
  - tag: ubuntu-20.04-hip-5.3.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/hip/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/hip:ubuntu-20.04-hip-5.3.0
+ - tag: ubuntu-20.04-hip-5.2.3
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/hip/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/hip:ubuntu-20.04-hip-5.2.3
 
 ---
