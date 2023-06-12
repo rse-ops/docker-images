@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/hip
-updated_at: 2023-06-11 06:52:21.379062
+updated_at: 2023-06-12 06:51:26.040990
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/hip
