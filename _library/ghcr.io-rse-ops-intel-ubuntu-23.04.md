@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/intel-ubuntu-23.04
-updated_at: 2023-07-14 04:38:24.689528
+updated_at: 2023-07-15 04:23:06.898809
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/intel-ubuntu-23.04
