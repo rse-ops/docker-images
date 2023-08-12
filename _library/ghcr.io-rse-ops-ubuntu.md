@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/ubuntu
-updated_at: 2023-08-11 01:49:48.182991
+updated_at: 2023-08-12 01:46:18.950520
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/ubuntu
