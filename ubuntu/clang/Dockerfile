@@ -12,16 +12,9 @@ ENV llvm_spec="llvm@${llvm_version}+llvm_dylib+link_llvm_dylib~split_dwarf~lldb~
     CXX=/opt/view/bin/clang++ \
     CPP=/opt/view/bin/clang-cpp
 
-# build compiler and set defaults
-RUN spack external find hwloc ncurses \
- && spack spec --reuse "${llvm_spec}" \
- && spack add "${llvm_spec}" \
- && spack mirror add develop https://binaries.spack.io/releases/develop \
- && spack buildcache keys --install --trust \
- && spack install --fail-fast \
- && spack compiler add \
- && spack config add "packages:all:compiler:[${COMPILER_NAME}@${COMPILER_VERSION}]" \
- && update-alternatives --install /usr/bin/cc cc ${CC} 50 \
+# build compiler and set defaults then remove spack to keep image size small
+RUN ./scripts/build-with-spack.sh "${llvm_spec}"
+RUN update-alternatives --install /usr/bin/cc cc ${CC} 50 \
  && update-alternatives --install /usr/bin/c++ c++ ${CXX} 50 \
  && update-alternatives --install /usr/bin/cpp cpp ${CPP} 50 \
  && update-alternatives --install /usr/bin/c89 c89 ${CC} 50 \
