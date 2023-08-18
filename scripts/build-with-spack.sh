@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 set -x
+
+export ARG_SPEC=$1
+
 pushd /opt
 
 git clone https://github.com/spack/spack spack
@@ -35,9 +38,9 @@ spack mirror add develop https://binaries.spack.io/releases/develop
 # Move install tree outside of spack directory so spack repo can be removed after
 spack config add "config:install_tree:root:'/opt'"
 # Concretize spec
-spack spec --reuse $0
+spack spec --reuse $ARG_SPEC
 # Add spec to environment
-spack add $0
+spack add $ARG_SPEC
 spack buildcache keys --install --trust
 spack install --fail-fast
 
