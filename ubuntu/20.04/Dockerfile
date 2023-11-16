@@ -2,7 +2,7 @@ FROM ubuntu:20.04@sha256:ed4a42283d9943135ed87d4ee34e542f7f5ad9ecf2f244870e23122
 
 LABEL maintainer="Chris White <white238@llnl.gov>,@vsoch"
 
-ARG uptodate_github_commit_spack__spack__develop=9792625d1f2adcf0f6f8398c16edf412e4f76e4a
+ARG uptodate_github_commit_spack__spack__develop=66dea1d396a92f47e127d24fc4e67a8d9ff0c018
 ENV spack_commit=${uptodate_github_commit_spack__spack__develop}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
