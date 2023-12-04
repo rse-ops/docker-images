@@ -1,7 +1,7 @@
 ---
 layout: container
 name: ghcr.io/rse-ops/intel-ubuntu-24.04
-updated_at: 2023-12-04 04:01:54.519727
+updated_at: 2023-12-04 04:05:40.045180
 
 
 container_url: https://github.com/orgs/rse-ops/packages/container/package/intel-ubuntu-24.04
@@ -9,5 +9,8 @@ versions:
  - tag: intel-2021.2.0
    dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
    manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-24.04:intel-2021.2.0
+ - tag: intel-2021.3.0
+   dockerfile: https://github.com/rse-ops/docker-images/blob/main/ubuntu/intel/Dockerfile
+   manifest: https://crane.ggcr.dev/manifest/ghcr.io/rse-ops/intel-ubuntu-24.04:intel-2021.3.0
 
 ---
