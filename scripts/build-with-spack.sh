@@ -14,6 +14,9 @@ popd
 # temporary path update for this script
 export PATH=/opt/spack/bin:$PATH
 
+# Add Spack shell support
+. /opt/spack/share/spack/setup-env.sh
+
 # Bootstrap clingo
 spack bootstrap now
 
