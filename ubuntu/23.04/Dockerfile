@@ -1,3 +1,4 @@
+# TODO: fix this, it is pointing at 22.04 not 23.04
 FROM ubuntu:22.04@sha256:8eab65df33a6de2844c9aefd19efe8ddb87b7df5e9185a4ab73af936225685bb
 
 LABEL maintainer="@vsoch"
@@ -14,12 +15,10 @@ ENV PATH=/opt/view/bin:/opt/spack/bin:$PATH \
     CMAKE_PREFIX_PATH=/opt/view \
     ACLOCAL_PATH=/opt/view/share/aclocal
 
+# Install repository scripts dir to containers /opt/scripts
 WORKDIR /opt
 COPY ./scripts /opt/scripts
-# Install spack
+
+# Install base packages
 RUN ./scripts/ubuntu/apt-install-defaults-plus-args.sh && \
-    ./scripts/install-cmake-binary.sh && \
-    ./scripts/set-up-spack.sh
-# Tell spack to use this one without arguments
-# NOTE: this has to be here, setting it earlier will kill spack
-ENV SPACK_ENV=/opt/env
+    ./scripts/install-cmake-binary.sh
