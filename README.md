@@ -2,6 +2,8 @@
 
 ![img/rse-ops-docker.png](img/rse-ops-docker.png)
 
+**This repository is no longer building updated images. Please see https://github.com/LLNL/radiuss-docker for updated images**
+
 [![License](https://img.shields.io/badge/License-MIT%203--Clause-blue.svg)](https://github.com/rse-ops/radius-docker/blob/main/LICENSE)
 
 This repository contains Dockerfiles for CI builds for any project that might
